@@ -1,0 +1,18 @@
+language: python
+
+branches:
+  only:
+    - master
+
+python:
+  - '3.6'
+
+matrix:
+  include:
+    - python: '3.7'
+      dist: xenial
+      sudo: true
+
+cache: pip
+
+script: pytest

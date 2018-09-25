@@ -2,8 +2,8 @@ from typing import Dict, List, NamedTuple
 
 from pypokedex.exceptions import PyPokedexError
 
-class PokemonBaseStats(NamedTuple):
-    HP: int
+class BaseStats(NamedTuple):
+    hp: int
     attack: int
     defense: int
     sp_atk: int
@@ -19,6 +19,23 @@ class Pokemon:
             for pokemon_info in ['name', 'weight', 'height']:
                 setattr(self, pokemon_info, json_data[pokemon_info])
             
+            stat_dict = {}
+
+            for stat in json_data['stats']:
+                stat_value = stat['base_stat']
+                stat_name = stat['stat']['name']
+
+                if stat_name in ['hp', 'attack', 'defense', 'speed']:
+                    stat_dict[stat_name] = stat_value
+                elif stat_name == 'special-attack':
+                    stat_dict['sp_atk'] = stat_value
+                elif stat_name == 'special-defense':
+                    stat_dict['sp_def'] = stat_value
+
+            print(stat_dict)
+
+            self.base_stats = BaseStats(**stat_dict)
+
             self.abilities = tuple((ability['ability']['name'],
                                      ability['is_hidden'])
                                     for ability in json_data['abilities'])

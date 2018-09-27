@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from typing import Dict, List, NamedTuple
 
 from pypokedex.exceptions import PyPokedexError
@@ -32,8 +34,6 @@ class Pokemon:
                 elif stat_name == 'special-defense':
                     stat_dict['sp_def'] = stat_value
 
-            print(stat_dict)
-
             self.base_stats = BaseStats(**stat_dict)
 
             self.abilities = tuple((ability['ability']['name'],
@@ -43,16 +43,31 @@ class Pokemon:
             self.types = tuple(type_['type']['name']
                                for type_ in json_data['types'])
 
-            # TODO: Add base stats and moves by game            
+
+            # self.moves = tuple()
+            move_list = []
+            
+            for move in json_data['moves']:
+                move_name = move['move']['name']
+                
+                games_methods_and_levels = []
+                for game_details in move['version_group_details']:
+                    learn_level = game_details['level_learned_at']
+                    learn_method = game_details['move_learn_method']['name']
+                    game_name = game_details['version_group']['name']
+                    if learn_level == 0:  # Move not learned by level-up
+                        games_methods_and_levels.append((game_name, learn_method))
+                    else:
+                        games_methods_and_levels.append((game_name, learn_method, learn_level))                                    
+
+                move_list.append((move_name, tuple(games_methods_and_levels)))
+            
+            self.moves = tuple(move_list)          
 
         except KeyError as error:
             raise PyPokedexError('A required piece of data was not found for'
                                  'the current Pokemon!') from error
-    
-    def get_moves_for_game(name: str):
-        # TODO: Return moves for pokemon by name of game
-        pass
-    
+
     # Method to make all attributes const
     def __setattr__(self, name: str, value: str):
         if hasattr(self, name):

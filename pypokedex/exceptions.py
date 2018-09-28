@@ -7,5 +7,5 @@ class PyPokedexHTTPError(PyPokedexError):
         self._http_code = http_code
 
     @property
-    def http_code():
+    def http_code(self):
         return self._http_code

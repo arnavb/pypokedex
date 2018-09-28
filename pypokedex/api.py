@@ -25,9 +25,9 @@ def get(**kwargs):
 
     except requests.exceptions.HTTPError as error:
         if response.status_code == 404:
-            raise PokeapiHTTPError('The requested pokemon was not '
+            raise PyPokedexHTTPError('The requested pokemon was not '
                                    'found!', 404) from error
-        raise PokeapiHTTPError('An HTTP error occurred! '
+        raise PyPokedexHTTPError('An HTTP error occurred! '
                                '(Status code: {response.status_code})',
                                response.status_code) from error
 

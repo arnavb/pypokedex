@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 import pytest
-import responses
+import responses as rsps  # So it can be later redefined as a function
 import requests
 
 import pypokedex
@@ -109,20 +109,6 @@ sample_pokemon = {
     ]
 }
 
-def test_wrong_number_of_arguments():
-    with pytest.raises(TypeError):
-         pypokedex.get()
-
-    with pytest.raises(TypeError):
-        pypokedex.get(a=2, b='many', dex='arguments')
-
-def test_incorrect_argument_types():
-    with pytest.raises(TypeError):
-        pypokedex.get(dex='A STRING')
-    
-    with pytest.raises(TypeError):
-        pypokedex.get(name=111)
-
 def _is_valid_sample_pokemon(pokemon: pypokedex.Pokemon):
     return pokemon.dex == 999 and \
         pokemon.name == 'sample' and \
@@ -139,68 +125,84 @@ def _is_valid_sample_pokemon(pokemon: pypokedex.Pokemon):
         pokemon.moves[0] == ('move_1', (('game_1', 'tutor'),
                                         ('game_2', 'level-up', 5)))
 
-@responses.activate
-def test_get_sample_pokemon():
+def setup_function():
+    pypokedex.get.cache_clear()
+
+@pytest.fixture
+def responses():
+    pypokedex.get.cache_clear()
+    with rsps.RequestsMock() as requests_mock:
+        yield requests_mock
+
+# --------------------------------------------------
+# Begin tests
+# --------------------------------------------------
+
+def test_too_few_get_arguments():
+    with pytest.raises(TypeError):
+         pypokedex.get()
+
+def test_too_many_get_arguments():
+    with pytest.raises(TypeError):
+        pypokedex.get(a=2, b='many', dex='arguments')
+
+def test_incorrect_get_argument_types():
+    with pytest.raises(TypeError):
+        pypokedex.get(dex='A STRING')
+    
+    with pytest.raises(TypeError):
+        pypokedex.get(name=111)
+
+def test_get_sample_pokemon_by_name(responses):
     responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
                   json=sample_pokemon, status=200)
-    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
-                  json=sample_pokemon, status=200)
-    
-    pypokedex.get.cache_clear()
     
     pokemon = pypokedex.get(name='sample')
     
     assert _is_valid_sample_pokemon(pokemon)
-    
-    pypokedex.get.cache_clear()
+
+def test_get_sample_pokemon_by_dex(responses):
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
+                  json=sample_pokemon, status=200)
     
     pokemon = pypokedex.get(dex=999)
     
     assert _is_valid_sample_pokemon(pokemon)
 
-@responses.activate
-def test_invalid_http_status():
+def test_404_pokemon_not_found(responses):
     responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
                   json={}, status=404)
-    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
-                  json={}, status=408)
-    
-    pypokedex.get.cache_clear()
     
     with pytest.raises(PyPokedexHTTPError) as not_found:
         pypokedex.get(name='sample')
-    
-    assert 'not found' in str(not_found.value)
+
     assert not_found.value.http_code == 404
-    
-    pypokedex.get.cache_clear()
+
+def test_other_HTTP_errors(responses):
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
+                  json={}, status=408)
     
     with pytest.raises(PyPokedexHTTPError) as other_http_error:
         pypokedex.get(name='sample')
 
     assert other_http_error.value.http_code == 408
 
-@responses.activate
-def test_other_errors():
-    cloned_sample_pokemon = deepcopy(sample_pokemon)
-    del cloned_sample_pokemon['weight']
-    
+def test_requests_errors(responses):
     responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
                   body=requests.exceptions.RequestException('Some error'))
+    
+    with pytest.raises(PyPokedexError) as requests_error:
+        pypokedex.get(name='sample')
+
+def test_missing_data_keys_for_pokemon(responses):
+    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    del cloned_sample_pokemon['weight']
     responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
                   json=cloned_sample_pokemon, status=200)
     
-    pypokedex.get.cache_clear()
-    
-    with pytest.raises(PyPokedexError) as requests_error:
-        pokemon = pypokedex.get(name='sample')
-        print(pokemon.types)
-    
-    assert 'requests' in str(requests_error.value)
-    
-    pypokedex.get.cache_clear()
-    
     with pytest.raises(PyPokedexError) as data_not_found:
         pypokedex.get(name='sample')
-    
-    assert 'data was not found' in str(data_not_found.value)
+
+# --------------------------------------------------
+# End tests
+# --------------------------------------------------

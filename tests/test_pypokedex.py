@@ -115,15 +115,16 @@ def _is_valid_sample_pokemon(pokemon: pypokedex.pokemon.Pokemon):
         pokemon.height == 200.2 and \
         pokemon.weight == 201.2 and \
         pokemon.types == ('type_1', 'type_2') and \
-        pokemon.abilities == (('ability_1', True), ('ability_2', False)) and \
+        pokemon.abilities[0] == pypokedex.pokemon.Ability('ability_1', True) and \
+        pokemon.abilities[1] == pypokedex.pokemon.Ability('ability_2', False) and \
         pokemon.base_stats.hp == 1 and \
         pokemon.base_stats.attack == 2 and \
         pokemon.base_stats.defense == 3 and \
         pokemon.base_stats.sp_atk == 4 and \
         pokemon.base_stats.sp_def == 5 and \
         pokemon.base_stats.speed == 6 and \
-        pokemon.moves[0] == ('move_1', (('game_1', 'tutor'),
-                                        ('game_2', 'level-up', 5)))
+        pokemon.moves['move_1']['game_1'] == pypokedex.pokemon.Move('tutor', None) and \
+        pokemon.moves['move_1']['game_2'] == pypokedex.pokemon.Move('level-up', 5)
 
 def setup_function():
     pypokedex.get.cache_clear()

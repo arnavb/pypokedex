@@ -7,7 +7,7 @@
 PyPokedex is a minimal pokedex library for Python. Usage of the library can be 
 summarized as follows:
 
-```python
+```
 >>> import pypokedex
 >>> p = pypokedex.get(dex=445) # Or pypokedex.get(name='Garchomp')
 >>> p.name

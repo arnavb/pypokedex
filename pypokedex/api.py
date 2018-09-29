@@ -3,7 +3,7 @@ from functools import lru_cache
 import requests
 
 from pypokedex.exceptions import PyPokedexError, PyPokedexHTTPError
-from pypokedex._pokemon import Pokemon
+from pypokedex.pokemon import Pokemon
 
 @lru_cache(maxsize=None)
 def get(**kwargs):

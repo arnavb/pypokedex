@@ -109,7 +109,7 @@ sample_pokemon = {
     ]
 }
 
-def _is_valid_sample_pokemon(pokemon: pypokedex.Pokemon):
+def _is_valid_sample_pokemon(pokemon: pypokedex._pokemon.Pokemon):
     return pokemon.dex == 999 and \
         pokemon.name == 'sample' and \
         pokemon.height == 200.2 and \

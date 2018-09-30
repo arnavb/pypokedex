@@ -3,6 +3,7 @@
 </p>
 
 [![Build Status](https://travis-ci.org/arnavb/pypokedex.svg?branch=master)](https://travis-ci.org/arnavb/pypokedex)
+[![Codecov](https://img.shields.io/codecov/c/github/arnavb/pypokedex.svg)](https://codecov.io/gh/arnavb/pypokedex)
 
 PyPokedex is a minimal pokedex library for Python. Usage of the library can be 
 summarized as follows:

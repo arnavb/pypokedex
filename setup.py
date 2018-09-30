@@ -24,6 +24,17 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/arnavb/pypokedex',
     classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Topic :: Games/Entertainment :: Role-Playing',
+        'Topic :: Software Development :: Libraries'
     ],
 
     author='Arnav Borborah',

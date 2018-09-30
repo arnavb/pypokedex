@@ -1,5 +1,5 @@
 <p align='center'>
-    <img src='assets/logo.png'/>
+    <img src='https://raw.githubusercontent.com/arnavb/pypokedex/master/assets/logo.png'/>
 </p>
 
 [![Build Status](https://travis-ci.org/arnavb/pypokedex.svg?branch=master)](https://travis-ci.org/arnavb/pypokedex)

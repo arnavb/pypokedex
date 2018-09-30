@@ -13,4 +13,7 @@ matrix:
 
 cache: pip
 
-script: pytest
+script:
+  - pytest
+  - mypy pypokedex
+  - flake8

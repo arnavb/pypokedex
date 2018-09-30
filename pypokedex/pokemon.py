@@ -1,12 +1,12 @@
-from functools import lru_cache
-
-from typing import Dict, List, NamedTuple
+from typing import Dict, NamedTuple
 
 from pypokedex.exceptions import PyPokedexError
 
+
 class Ability(NamedTuple):
     name: str
-    is_hidden: bool = False
+    is_hidden: bool
+
 
 class BaseStats(NamedTuple):
     hp: int
@@ -16,19 +16,21 @@ class BaseStats(NamedTuple):
     sp_def: int
     speed: int
 
+
 class Move(NamedTuple):
     learn_method: str
     level: int
 
+
 class Pokemon:
-    def __init__(self, json_data):
+    def __init__(self, json_data) -> None:
         # Load pokemon data
         try:
             self.dex = json_data['id']
 
-            for pokemon_info in ['name', 'weight', 'height']:
+            for pokemon_info in ['name', 'height', 'weight']:
                 setattr(self, pokemon_info, json_data[pokemon_info])
-            
+
             stat_dict = {}
 
             for stat in json_data['stats']:
@@ -44,19 +46,18 @@ class Pokemon:
 
             self.base_stats = BaseStats(**stat_dict)
 
-            self.abilities = tuple(Ability(name=ability['ability']['name'],
-                                     is_hidden=ability['is_hidden'])
-                                    for ability in json_data['abilities'])
+            self.abilities = tuple(Ability(ability['ability']['name'],
+                                           ability['is_hidden'])
+                                   for ability in json_data['abilities'])
 
             self.types = tuple(type_['type']['name']
                                for type_ in json_data['types'])
 
+            self.moves: Dict[str, Dict[str, Move]] = {}
 
-            self.moves = {}
-            
             for move in json_data['moves']:
                 move_name = move['move']['name']
-                
+
                 games_methods_and_levels = {}
                 for game_details in move['version_group_details']:
                     learn_level = game_details['level_learned_at']
@@ -65,7 +66,8 @@ class Pokemon:
                     if learn_level == 0:  # Move not learned by level-up
                         learn_level = None
 
-                    games_methods_and_levels[game_name] = Move(learn_method=learn_method, level=learn_level)
+                    games_methods_and_levels[game_name] = Move(learn_method,
+                                                               learn_level)
 
                 self.moves[move_name] = games_methods_and_levels
 
@@ -74,7 +76,7 @@ class Pokemon:
                                  'the current Pokemon!') from error
 
     # Method to make all attributes const
-    def __setattr__(self, name: str, value: str):
+    def __setattr__(self, name: str, value: str) -> None:
         if hasattr(self, name):
             raise TypeError('Constant attributes may not be modified!')
 

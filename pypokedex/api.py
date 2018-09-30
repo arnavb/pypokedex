@@ -5,8 +5,9 @@ import requests
 from pypokedex.exceptions import PyPokedexError, PyPokedexHTTPError
 from pypokedex.pokemon import Pokemon
 
+
 @lru_cache(maxsize=None)
-def get(**kwargs):
+def get(**kwargs) -> Pokemon:
     if len(kwargs) != 1:
         raise TypeError('pypokedex.get() expects expects only 1 argument!')
 
@@ -15,7 +16,7 @@ def get(**kwargs):
     if 'dex' in kwargs and isinstance(kwargs['dex'], int):
         subpage = kwargs['dex']
     elif 'name' in kwargs and isinstance(kwargs['name'], str):
-        subpage = kwargs['name'].lower()
+        subpage = kwargs['name'].lower()  # type: ignore
     else:
         raise TypeError('Arguments were either of an incorrect type or value!')
 
@@ -26,10 +27,10 @@ def get(**kwargs):
     except requests.exceptions.HTTPError as error:
         if response.status_code == 404:
             raise PyPokedexHTTPError('The requested pokemon was not '
-                                   'found!', 404) from error
+                                     'found!', 404) from error
         raise PyPokedexHTTPError('An HTTP error occurred! '
-                               '(Status code: {response.status_code})',
-                               response.status_code) from error
+                                 '(Status code: {response.status_code})',
+                                 response.status_code) from error
 
     except requests.exceptions.RequestException as error:
         raise PyPokedexError('An internal requests exception '

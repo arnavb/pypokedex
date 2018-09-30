@@ -217,7 +217,7 @@ def test_missing_data_keys_for_pokemon(responses):
         pypokedex.get(name='sample')
 
 
-def test_modifying_pokemon_immutable_attributes_is_not_possible(responses):
+def test_pokemon_immutability(responses):
     responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
                   json=sample_pokemon, status=200)
 

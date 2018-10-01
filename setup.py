@@ -33,7 +33,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
-        'Topic :: Games/Entertainment :: Role-Playing',
+        'Topic :: Games/Entertainment',
         'Topic :: Software Development :: Libraries'
     ],
 

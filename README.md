@@ -23,8 +23,8 @@ summarized as follows:
 ('ground', 'dragon')
 >>> p.base_stats
 BaseStats(hp=108, attack=130, defense=95, sp_atk=80, sp_def=85, speed=102)
->>> p.moves['swords-dance']['x-y']
-Move(learn_method='machine', level=None)
+>>> [move.name for move in p.moves['sun-moon']] # Garchomp's Sun/Moon move names
+['swords-dance', 'sand-attack', 'sand-attack', 'tackle', ...]
 >>> p.abilities[0] # Is a tuple
 Ability(name='rough-skin', is_hidden=True)
 ```

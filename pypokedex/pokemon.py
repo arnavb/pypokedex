@@ -1,4 +1,6 @@
-from typing import Dict, NamedTuple
+from collections import defaultdict
+
+from typing import DefaultDict, NamedTuple
 
 from pypokedex.exceptions import PyPokedexError
 
@@ -18,6 +20,7 @@ class BaseStats(NamedTuple):
 
 
 class Move(NamedTuple):
+    name: str
     learn_method: str
     level: int
 
@@ -53,7 +56,7 @@ class Pokemon:
             self.types = tuple(type_['type']['name']
                                for type_ in json_data['types'])
 
-            self.moves: Dict[str, Dict[str, Move]] = {}
+            self.moves = defaultdict(list)
 
             for move in json_data['moves']:
                 move_name = move['move']['name']
@@ -66,10 +69,8 @@ class Pokemon:
                     if learn_level == 0:  # Move not learned by level-up
                         learn_level = None
 
-                    games_methods_and_levels[game_name] = Move(learn_method,
-                                                               learn_level)
-
-                self.moves[move_name] = games_methods_and_levels
+                    self.moves[game_name].append(Move(move_name, learn_method,
+                                                               learn_level))
 
         except KeyError as error:
             raise PyPokedexError('A required piece of data was not found for'

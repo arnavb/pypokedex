@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from typing import DefaultDict, NamedTuple
+from typing import DefaultDict, List, NamedTuple
 
 from pypokedex.exceptions import PyPokedexError
 
@@ -56,12 +56,11 @@ class Pokemon:
             self.types = tuple(type_['type']['name']
                                for type_ in json_data['types'])
 
-            self.moves = defaultdict(list)
+            self.moves: DefaultDict[str, List[Move]] = defaultdict(list)
 
             for move in json_data['moves']:
                 move_name = move['move']['name']
 
-                games_methods_and_levels = {}
                 for game_details in move['version_group_details']:
                     learn_level = game_details['level_learned_at']
                     learn_method = game_details['move_learn_method']['name']
@@ -70,7 +69,7 @@ class Pokemon:
                         learn_level = None
 
                     self.moves[game_name].append(Move(move_name, learn_method,
-                                                               learn_level))
+                                                      learn_level))
 
         except KeyError as error:
             raise PyPokedexError('A required piece of data was not found for'

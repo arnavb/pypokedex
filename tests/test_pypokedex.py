@@ -124,8 +124,8 @@ def _is_valid_sample_pokemon(pokemon: pypokedex.pokemon.Pokemon):
             pokemon.base_stats.sp_atk == 4 and
             pokemon.base_stats.sp_def == 5 and
             pokemon.base_stats.speed == 6 and
-            pokemon.moves['move_1']['game_1'] == pypokedex.pokemon.Move('tutor', None) and  # noqa
-            pokemon.moves['move_1']['game_2'] == pypokedex.pokemon.Move('level-up', 5))  # noqa
+            pokemon.moves['game_1'][0] == pypokedex.pokemon.Move('move_1', 'tutor', None) and  # noqa
+            pokemon.moves['game_2'][0] == pypokedex.pokemon.Move('move_1', 'level-up', 5))  # noqa
 
 
 def setup_function():

@@ -20,11 +20,11 @@ summarized as follows:
 >>> p.height
 19
 >>> p.types
-('ground', 'dragon')
+['ground', 'dragon']
 >>> p.base_stats
 BaseStats(hp=108, attack=130, defense=95, sp_atk=80, sp_def=85, speed=102)
 >>> [move.name for move in p.moves['sun-moon']] # Garchomp's Sun/Moon move names
 ['swords-dance', 'sand-attack', 'sand-attack', 'tackle', ...]
->>> p.abilities[0] # Is a tuple
-Ability(name='rough-skin', is_hidden=True)
+>>> p.abilities
+[Ability(name='rough-skin', is_hidden=True), Ability(name='sand-veil', is_hidden=False)]
 ```

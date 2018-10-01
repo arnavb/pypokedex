@@ -49,12 +49,12 @@ class Pokemon:
 
             self.base_stats = BaseStats(**stat_dict)
 
-            self.abilities = tuple(Ability(ability['ability']['name'],
-                                           ability['is_hidden'])
-                                   for ability in json_data['abilities'])
+            self.abilities = [Ability(ability['ability']['name'],
+                                      ability['is_hidden'])
+                              for ability in json_data['abilities']]
 
-            self.types = tuple(type_['type']['name']
-                               for type_ in json_data['types'])
+            self.types = [type_['type']['name']
+                          for type_ in json_data['types']]
 
             self.moves: DefaultDict[str, List[Move]] = defaultdict(list)
 

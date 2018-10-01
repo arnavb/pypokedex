@@ -115,7 +115,7 @@ def _is_valid_sample_pokemon(pokemon: pypokedex.pokemon.Pokemon):
             pokemon.name == 'sample' and
             pokemon.height == 200.2 and
             pokemon.weight == 201.2 and
-            pokemon.types == ('type_1', 'type_2') and
+            pokemon.types == ['type_1', 'type_2'] and
             pokemon.abilities[0] == pypokedex.pokemon.Ability('ability_1', True) and  # noqa
             pokemon.abilities[1] == pypokedex.pokemon.Ability('ability_2', False) and  # noqa
             pokemon.base_stats.hp == 1 and

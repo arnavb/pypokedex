@@ -74,10 +74,3 @@ class Pokemon:
         except KeyError as error:
             raise PyPokedexError('A required piece of data was not found for'
                                  'the current Pokemon!') from error
-
-    # Method to make all attributes const
-    def __setattr__(self, name: str, value: str) -> None:
-        if hasattr(self, name):
-            raise TypeError('Constant attributes may not be modified!')
-
-        self.__dict__[name] = value

@@ -216,20 +216,6 @@ def test_missing_data_keys_for_pokemon(responses):
     with pytest.raises(PyPokedexError):
         pypokedex.get(name='sample')
 
-
-def test_pokemon_immutability(responses):
-    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
-                  json=sample_pokemon, status=200)
-
-    pokemon = pypokedex.get(name='sample')
-
-    for attribute in ['name', 'height', 'weight', 'moves', 'base_stats',
-                      'abilities', 'types', 'moves']:
-        with pytest.raises(TypeError):
-            setattr(pokemon, attribute, None)
-    # TODO: Figure out to prevent in-place modification of mutable values
-    # like dicts.
-
 # --------------------------------------------------
 # End tests
 # --------------------------------------------------

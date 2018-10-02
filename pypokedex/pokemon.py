@@ -74,3 +74,12 @@ class Pokemon:
         except KeyError as error:
             raise PyPokedexError('A required piece of data was not found for'
                                  'the current Pokemon!') from error
+    
+    def learns(move_name: str, game: str):
+        try:
+            for move in self.moves[game]:
+                if move.name == move_name:
+                    return True
+            return False
+        except KeyError:
+            raise PyPokedexError(f'{self.name} is not obtainable in {game}!')

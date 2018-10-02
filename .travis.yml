@@ -10,17 +10,17 @@ jobs:
   include:
     - stage: test
       python: '3.6'
-      script: pytest --cov=pypokedex
+      script:
+        - pytest --cov=pypokedex
+        - mypy pypokedex
+        - flake8
       after_success: bash <(curl -s https://codecov.io/bash)
     - python: '3.7'
       script: pytest
       dist: xenial
       sudo: true
-    - python: '3.6'
-      script: flake8
-    - python: '3.6'
-      script: mypy pypokedex
     - stage: deploy
+      python: '3.6'
       script: skip
       deploy:
         provider: pypi

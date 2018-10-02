@@ -4,20 +4,31 @@ branches:
   only:
     - master
 
-matrix:
-  include:
-    - python: '3.6'
-      env: TASK="pytest --cov=pypokedex"
-      after_success: bash <(curl -s https://codecov.io/bash)
-    - python: '3.6'
-      env: TASK=flake8
-    - python: '3.6'
-      env: TASK="mypy pypokedex"
-    - python: '3.7'
-      env: TASK=pytest
-      dist: xenial
-      sudo: true
-
 cache: pip
 
-script: $TASK
+jobs:
+  include:
+    - stage: test
+      python: '3.6'
+      script: pytest --cov=pypokedex
+      after_success: bash <(curl -s https://codecov.io/bash)
+    - python: '3.7'
+      script: pytest
+      dist: xenial
+      sudo: true
+    - python: '3.6'
+      script: flake8
+    - python: '3.6'
+      script: mypy pypokedex
+    - stage: deploy
+      script: skip
+      deploy:
+        provider: pypi
+        user: 'arnavb'
+        password:
+          secure: 'LDw5mBkYxj+/RHnJxy+sqMVcHMPYnWbIuIFovRQaQ/ft+pOKgfScubTaOf1lph0XM6g/epjJ9X0VMHE7WnKx+g0jNRdD+/f+nYwMhVjTx6mLdi+oMzuRjKMZ/odv3877bK0JoR5wPaAc4Ll/ZXXTGL2OdrKUDFrPs7ESE36q/scrrLDExCtGIR9J7spv0d1ZMMXaEE5LxDrAuJb9hfbnoETM0N2G0Lzq10z1Vuuv/M7L75hFIw+ozL8zzGT1rAErMMVV2KYM1nwItJ1q3jaXqMqRCvjYc8wTmb5DIx6AchcdjTigaH7L+UAc6kM9RvJYI/SHQxzgjdIfGpl1tAnoY44xFCrKYBuoyB5xqr06oiqLbgr2Y1vUUaNnKkvKOclInKx4QJJLc9VYK0Ll9AFkPjckqmAU/bAed7mhd52TslHWDOforLxkaYQyP0wwnHotEuucJUzVoDBDtSx9/HuxeTB1mtvJY0cYS5vF0CfDJwF+rX7SlDNo3Xspm8X3GFcCvfIZ1btgc6BMMHFO3IgNJ3PvyFzelrliRbwfw1u8KL5zVoDWsRhV+UiH1n6w2l8U9+QTselgl7n+SpQOktppqiIAkgq3VXBRFiCeMqVZpFHmt23RaD0sstmVgBBCyU+C9Lp3WInzmT8f7g3Z8jXRCJBV57HFRnfprruO0Ny3wfw='
+        skip_cleanup: true
+        distributions: "sdist bdist_wheel"
+        on:
+          tags: true
+          branch: master

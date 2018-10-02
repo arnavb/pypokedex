@@ -82,4 +82,4 @@ class Pokemon:
                     return True
             return False
         except KeyError:
-            raise PyPokedexError(f'{self.name} is not obtainable in {game}!')
+            raise PyPokedexError(f'{self.name} is not obtainable in {game}!') # type: ignore

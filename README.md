@@ -37,7 +37,29 @@ to get the latest commit on master.
 
 ## Documentation
 
-TODO: Write some!
+### The Basics
+
+This package (`pypokedex`) only provides one function through the
+public API- `get`. It can be used as follows:
+
+```python
+import pypokedex
+
+pokemon = pypokedex.get(dex=DEX)  # DEX must be a valid _national_ pokedex
+                                  # number
+pokemon2 = pypokedex.get(name=NAME)  # NAME must be a valid name of a pokemon
+```
+
+#### Possible errors
+
+If `get` is called with an incorrect signature (e.g too many arguments), then
+a `TypeError` will be raised with details about the problem. If the pokemon is
+not found, then a `pypokedex.exceptions.PyPokedexHTTPError` will be raised with
+a status code of 404. For more details, see the section on [exceptions](#exceptions)
+
+## Exceptions
+
+
 
 ## License
 

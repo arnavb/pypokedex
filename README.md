@@ -9,7 +9,7 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypokedex.svg)
 [![License](https://img.shields.io/github/license/arnavb/pypokedex.svg)](https://github.com/arnavb/pypokedex/blob/master/LICENSE)
 
-PyPokedex is a minimal pokedex library for Python. A simple example of usage:
+PyPokedex is a minimal pokedex library for Python that uses [PokeAPI](https://pokeapi.co/) internally to get Pokemon data. A simple example:
 
 <p align='center'>
     <img src='https://raw.githubusercontent.com/arnavb/pypokedex/master/assets/example-usage.png'/>
@@ -27,4 +27,18 @@ Use:
 $ pip install pypokedex
 ```
 
-and you should be ready to go!
+to get the latest stable release, or:
+
+```bash
+$ pip install git+https://github.com/arnavb/pypokedex.git@master
+```
+
+to get the latest commit on master.
+
+## Documentation
+
+TODO: Write some!
+
+## License
+
+This library is licensed under the [MIT License](https://github.com/arnavb/pypokedex/blob/master/LICENSE).

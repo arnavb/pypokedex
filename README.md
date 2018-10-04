@@ -37,10 +37,8 @@ to get the latest commit on master.
 
 ## Documentation
 
-### The Basics
-
 This package (`pypokedex`) only provides one function through the
-public API- `get`. It can be used as follows:
+public API—`get`. It can be used as follows:
 
 ```python
 import pypokedex
@@ -50,16 +48,51 @@ pokemon = pypokedex.get(dex=DEX)  # DEX must be a valid _national_ pokedex
 pokemon2 = pypokedex.get(name=NAME)  # NAME must be a valid name of a pokemon
 ```
 
-#### Possible errors
+#### Possible Exceptions
 
-If `get` is called with an incorrect signature (e.g too many arguments), then
-a `TypeError` will be raised with details about the problem. If the pokemon is
-not found, then a `pypokedex.exceptions.PyPokedexHTTPError` will be raised with
-a status code of 404. For more details, see the section on [exceptions](#exceptions)
+- A `TypeError` will be raised if the wrong number of arguments or the wrong
+  type of arguments are passed.
+- A `PyPokedexHTTPError` will be raised with an HTTP code of 404 if the Pokemon
+  requested is not found. **Note**: The `name` parameter to `get` is _case-insensitive_.
+- A `PyPokedexHTTPError` will be raised with the proper HTTP code if another type
+  of HTTP error occurs.
+- A `PyPokedexError` will be raised if a [requests exception](http://docs.python-requests.org/en/master/_modules/requests/exceptions/)
+  occurs (with the exception of `requests.exceptions.HTTPError`, handled in the
+  previous two bullet points).
+- A `PyPokedexError` will be raised if data is missing when parsing the returned
+  JSON from PokeAPI (usually this indicates an API change).
 
-## Exceptions
 
+Once a valid `pypokedex.pokemon.Pokemon` object is returned, the following
+members are provided for its consumption:
 
+- `dex` (`int`): Contains the _national_ Pokedex number of the current Pokemon.
+- `name` (`str`): Contains the name of the current Pokemon.
+- `height` (`int`): Contains ten times the actual height of the current Pokemon.
+- `weight` (`int`): Contains ten times the actual weight of the current Pokemon.
+- `base_stats` (`BaseStats`): Contains a named tuple with the current
+  Pokemon's base stats stored as follows (all `int`s):
+  - `hp`: The base HP of the current Pokemon.
+  - `atk`: The base attack of the current Pokemon.
+  - `def`: The base defense of the current Pokemon.
+  - `sp_atk`: The base special attack of the current Pokemon.
+  - `sp_def`: The base special defense of the current Pokemon.
+  - `speed`: The base speed of the current Pokemon.
+- `abilities` (`List[Ability]`): Contains a list of named tuples called `Ability`.
+  Each `Ability` has the following members:
+  - `name` (`str`): The name of the current ability.
+  - `is_hidden` (`bool`): Whether the current ability is a hidden ability or not.
+- `types` (`Tuple[str]`): Contains a tuple of strings with the name of the current
+  Pokemon's types.
+- `moves` (`DefaultDict[str, List[Move]]`): Contains a dictionary of game names
+  (according to PokeAPI) to a list of named tuples called `Move` representing the
+  moves the current Pokemon learns in the respective game. The `Move` named tuple
+  contains the following members:
+  - `name` (`str`): The name of the current move.
+  - `learn_method` (`str`): The method the current Pokemon uses to learn the
+    current move (according to PokeAPI).
+  - `level` (`int`): The level the current Pokemon learns the current move if
+    `learn_method` is `level-up`, `None` otherwise.
 
 ## License
 

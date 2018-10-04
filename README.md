@@ -82,7 +82,7 @@ members are provided for its consumption:
   Each `Ability` has the following members:
   - `name` (`str`): The name of the current ability.
   - `is_hidden` (`bool`): Whether the current ability is a hidden ability or not.
-- `types` (`Tuple[str]`): Contains a tuple of strings with the name of the current
+- `types` (`List[str]`): Contains a list of strings with the name of the current
   Pokemon's types.
 - `moves` (`DefaultDict[str, List[Move]]`): Contains a dictionary of game names
   (according to PokeAPI) to a list of named tuples called `Move` representing the

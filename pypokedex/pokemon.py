@@ -75,11 +75,11 @@ class Pokemon:
             raise PyPokedexError('A required piece of data was not found for'
                                  'the current Pokemon!') from error
 
-    def exists(self, game: str) -> bool:
+    def exists_in(self, game: str) -> bool:
         return game in self.moves
 
     def learns(self, move_name: str, game: str) -> bool:
-        if not self.exists(game):
+        if not self.exists_in(game):
             raise PyPokedexError(f'{self.name} is not '  # type: ignore
                                  f'obtainable in {game}!')
 
@@ -87,18 +87,18 @@ class Pokemon:
             if move.name == move_name:
                 return True
         return False
-    
-    def __eq__(self, other: 'Pokemon') -> bool:
+
+    def __eq__(self, other) -> bool:
         return self.dex == other.dex
 
-    def __lt__(self, other: 'Pokemon') -> bool:
+    def __lt__(self, other) -> bool:
         return self.dex < other.dex
 
-    def __gt__(self, other: 'Pokemon') -> bool:
+    def __gt__(self, other) -> bool:
         return self.dex > other.dex
 
-    def __le__(self, other: 'Pokemon') -> bool:
+    def __le__(self, other) -> bool:
         return self.dex <= other.dex
 
-    def __ge__(self, other: 'Pokemon') -> bool:
+    def __ge__(self, other) -> bool:
         return self.dex >= other.dex

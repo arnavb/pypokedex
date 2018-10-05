@@ -251,6 +251,8 @@ def test_pokemon_less_than(responses):
     first_pokemon = pypokedex.get(dex=998)
     second_pokemon = pypokedex.get(dex=999)
     assert first_pokemon < second_pokemon
+    assert not first_pokemon == second_pokemon
+    assert not first_pokemon > second_pokemon
 
 
 def test_pokemon_greater_than(responses):
@@ -264,6 +266,8 @@ def test_pokemon_greater_than(responses):
     first_pokemon = pypokedex.get(dex=998)
     second_pokemon = pypokedex.get(dex=999)
     assert second_pokemon > first_pokemon
+    assert not first_pokemon == second_pokemon
+    assert not first_pokemon < second_pokemon
 
 
 def test_404_pokemon_not_found(responses):

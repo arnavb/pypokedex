@@ -68,7 +68,7 @@ members are provided for its consumption:
 
 - `dex` (`int`): Contains the _national_ Pokedex number of the current Pokemon.
 - `name` (`str`): Contains the name of the current Pokemon.
-- `height` (`int`): Contains the actual height of the current Pokemon in decimeters.
+- `height` (`int`): Contains the height of the current Pokemon in decimeters.
 - `weight` (`int`): Contains the weight of the current Pokemon in hectograms.
 - `types` (`List[str]`): Contains a list of strings with the name of the current
   Pokemon's types.

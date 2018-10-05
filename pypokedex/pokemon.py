@@ -88,17 +88,17 @@ class Pokemon:
                 return True
         return False
     
-    def __eq__(self, other: Pokemon) -> bool:
+    def __eq__(self, other: 'Pokemon') -> bool:
         return self.dex == other.dex
 
-    def __lt__(self, other: Pokemon) -> bool:
+    def __lt__(self, other: 'Pokemon') -> bool:
         return self.dex < other.dex
 
-    def __gt__(self, other: Pokemon) -> bool:
+    def __gt__(self, other: 'Pokemon') -> bool:
         return self.dex > other.dex
 
-    def __le__(self, other: Pokemon) -> bool:
+    def __le__(self, other: 'Pokemon') -> bool:
         return self.dex <= other.dex
 
-    def __ge__(self, other: Pokemon) -> bool:
+    def __ge__(self, other: 'Pokemon') -> bool:
         return self.dex >= other.dex

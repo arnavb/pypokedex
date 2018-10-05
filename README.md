@@ -70,6 +70,12 @@ members are provided for its consumption:
 - `name` (`str`): Contains the name of the current Pokemon.
 - `height` (`int`): Contains the actual height of the current Pokemon in decimeters.
 - `weight` (`int`): Contains the weight of the current Pokemon in hectograms.
+- `types` (`List[str]`): Contains a list of strings with the name of the current
+  Pokemon's types.
+- `abilities` (`List[Ability]`): Contains a list of named tuples called `Ability`.
+  Each `Ability` has the following members:
+  - `name` (`str`): The name of the current ability.
+  - `is_hidden` (`bool`): Whether the current ability is a hidden ability or not.
 - `base_stats` (`BaseStats`): Contains a named tuple with the current
   Pokemon's base stats stored as follows (all `int`s):
   - `hp`: The base HP of the current Pokemon.
@@ -78,12 +84,6 @@ members are provided for its consumption:
   - `sp_atk`: The base special attack of the current Pokemon.
   - `sp_def`: The base special defense of the current Pokemon.
   - `speed`: The base speed of the current Pokemon.
-- `abilities` (`List[Ability]`): Contains a list of named tuples called `Ability`.
-  Each `Ability` has the following members:
-  - `name` (`str`): The name of the current ability.
-  - `is_hidden` (`bool`): Whether the current ability is a hidden ability or not.
-- `types` (`List[str]`): Contains a list of strings with the name of the current
-  Pokemon's types.
 - `moves` (`DefaultDict[str, List[Move]]`): Contains a dictionary of game names
   (according to PokeAPI) to a list of named tuples called `Move` representing the
   moves the current Pokemon learns in the respective game. The `Move` named tuple

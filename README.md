@@ -68,8 +68,8 @@ members are provided for its consumption:
 
 - `dex` (`int`): Contains the _national_ Pokedex number of the current Pokemon.
 - `name` (`str`): Contains the name of the current Pokemon.
-- `height` (`int`): Contains ten times the actual height of the current Pokemon.
-- `weight` (`int`): Contains ten times the actual weight of the current Pokemon.
+- `height` (`int`): Contains the actual height of the current Pokemon in decimeters.
+- `weight` (`int`): Contains the weight of the current Pokemon in hectograms.
 - `base_stats` (`BaseStats`): Contains a named tuple with the current
   Pokemon's base stats stored as follows (all `int`s):
   - `hp`: The base HP of the current Pokemon.

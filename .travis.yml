@@ -31,4 +31,4 @@ jobs:
         distributions: "sdist bdist_wheel"
         on:
           tags: true
-          branch: master
+          all_branches: true

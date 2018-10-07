@@ -48,7 +48,7 @@ pokemon = pypokedex.get(dex=DEX)  # DEX must be a valid _national_ pokedex
 pokemon2 = pypokedex.get(name=NAME)  # NAME must be a valid name of a pokemon
 ```
 
-#### Possible Exceptions
+### Possible Exceptions
 
 - A `TypeError` will be raised if the wrong number of arguments or the wrong
   type of arguments are passed.
@@ -65,6 +65,8 @@ pokemon2 = pypokedex.get(name=NAME)  # NAME must be a valid name of a pokemon
 
 Once a valid `pypokedex.pokemon.Pokemon` object is returned, the following
 members are provided for its consumption:
+
+### Member Variables
 
 - `dex` (`int`): Contains the _national_ Pokedex number of the current Pokemon.
 - `name` (`str`): Contains the name of the current Pokemon.
@@ -93,6 +95,21 @@ members are provided for its consumption:
     current move (according to PokeAPI).
   - `level` (`int`): The level the current Pokemon learns the current move if
     `learn_method` is `level-up`, `None` otherwise.
+
+### Member Functions
+
+- `def exists_in(self, game: str) -> bool`: Method to check whether the current
+  Pokemon exists in a specific game.
+- `def learns(self, move_name: str, game: str) -> bool`: Method to check
+  whether the current Pokemon learns a specific move in a specific game.
+- `def __str__(self) -> str`: Method to get a string represenation of the
+  current Pokemon. This string is of the form: `Pokemon(dex={self.dex}, name='{self.name}')`.
+- `__eq__, __lt__, __gt__, __le__, __ge__`: Methods that implement various
+  comparison operators for Pokemon objects in terms of their Pokedex number.
+
+#### Possible Exceptions
+- `learns` will raise a `PyPokedexError` if the current Pokemon does not exist
+  in the game specified.
 
 ## License
 

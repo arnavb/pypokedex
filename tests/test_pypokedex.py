@@ -161,7 +161,7 @@ def test_incorrect_get_argument_types():
         pypokedex.get(name=111)
 
 
-def test_get_sample_pokemon_by_name(responses):
+def test_get_pokemon_by_name(responses):
     responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
                   json=sample_pokemon, status=200)
 
@@ -170,13 +170,154 @@ def test_get_sample_pokemon_by_name(responses):
     assert _is_valid_sample_pokemon(pokemon)
 
 
-def test_get_sample_pokemon_by_dex(responses):
+def test_get_pokemon_by_dex(responses):
     responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
                   json=sample_pokemon, status=200)
 
     pokemon = pypokedex.get(dex=999)
 
     assert _is_valid_sample_pokemon(pokemon)
+
+
+def test_pokemon_existence_in_games(responses):
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
+                  json=sample_pokemon, status=200)
+
+    pokemon = pypokedex.get(name='sample')
+
+    assert pokemon.exists_in('game_1')
+
+
+def test_pokemon_non_existence_in_games(responses):
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
+                  json=sample_pokemon, status=200)
+
+    pokemon = pypokedex.get(name='sample')
+
+    assert not pokemon.exists_in('some random string')
+
+
+def test_pokemon_learns_move(responses):
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
+                  json=sample_pokemon, status=200)
+
+    pokemon = pypokedex.get(name='sample')
+
+    assert pokemon.learns('move_1', 'game_1')
+    assert pokemon.learns('move_1', 'game_2')
+
+
+def test_pokemon_does_not_learn_move(responses):
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
+                  json=sample_pokemon, status=200)
+
+    pokemon = pypokedex.get(name='sample')
+
+    assert not pokemon.learns('random move', 'game_1')
+
+
+def test_pokemon_does_not_learn_move_because_it_is_not_in_the_specified_game(responses):  # noqa
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
+                  json=sample_pokemon, status=200)
+
+    pokemon = pypokedex.get(name='sample')
+
+    with pytest.raises(PyPokedexError):
+        pokemon.learns('random move', 'random game')
+
+
+def test_pokemon_str_function(responses):
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
+                  json=sample_pokemon, status=200)
+
+    pokemon = pypokedex.get(name='sample')
+    assert str(pokemon) == 'Pokemon(dex=999, name=\'sample\')'
+
+
+def test_pokemon_equality(responses):
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
+                  json=sample_pokemon, status=200)
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
+                  json=sample_pokemon, status=200)
+
+    first_pokemon = pypokedex.get(name='sample')
+    second_pokemon = pypokedex.get(dex=999)
+    assert first_pokemon == second_pokemon
+
+
+def test_pokemon_inequality(responses):
+    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon['id'] = 998
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/998',
+                  json=cloned_sample_pokemon, status=200)
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
+                  json=sample_pokemon, status=200)
+
+    first_pokemon = pypokedex.get(dex=998)
+    second_pokemon = pypokedex.get(dex=999)
+    assert first_pokemon != second_pokemon
+
+
+def test_pokemon_less_than(responses):
+    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon['id'] = 998
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/998',
+                  json=cloned_sample_pokemon, status=200)
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
+                  json=sample_pokemon, status=200)
+
+    first_pokemon = pypokedex.get(dex=998)
+    second_pokemon = pypokedex.get(dex=999)
+    assert first_pokemon < second_pokemon
+    assert not first_pokemon == second_pokemon
+    assert not first_pokemon > second_pokemon
+
+
+def test_pokemon_greater_than(responses):
+    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon['id'] = 998
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/998',
+                  json=cloned_sample_pokemon, status=200)
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
+                  json=sample_pokemon, status=200)
+
+    first_pokemon = pypokedex.get(dex=998)
+    second_pokemon = pypokedex.get(dex=999)
+    assert second_pokemon > first_pokemon
+    assert not second_pokemon == first_pokemon
+    assert not second_pokemon < first_pokemon
+
+
+def test_pokemon_less_than_or_equal_to(responses):
+    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon['id'] = 998
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/998',
+                  json=cloned_sample_pokemon, status=200)
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
+                  json=sample_pokemon, status=200)
+
+    first_pokemon = pypokedex.get(dex=998)
+    second_pokemon = pypokedex.get(dex=999)
+    third_pokemon = pypokedex.get(dex=999)
+    assert first_pokemon <= second_pokemon
+    assert second_pokemon <= third_pokemon
+    assert not third_pokemon <= first_pokemon
+
+
+def test_pokemon_greater_than_or_equal_to(responses):
+    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon['id'] = 998
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/998',
+                  json=cloned_sample_pokemon, status=200)
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
+                  json=sample_pokemon, status=200)
+
+    first_pokemon = pypokedex.get(dex=998)
+    second_pokemon = pypokedex.get(dex=999)
+    third_pokemon = pypokedex.get(dex=999)
+    assert second_pokemon >= first_pokemon
+    assert third_pokemon >= second_pokemon
+    assert not first_pokemon >= third_pokemon
 
 
 def test_404_pokemon_not_found(responses):

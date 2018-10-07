@@ -216,6 +216,16 @@ def test_pokemon_does_not_learn_move(responses):
     assert not pokemon.learns('random move', 'game_1')
 
 
+def test_pokemon_does_not_learn_move_because_it_is_not_in_the_specified_game(responses):  # noqa
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
+                  json=sample_pokemon, status=200)
+
+    pokemon = pypokedex.get(name='sample')
+
+    with pytest.raises(PyPokedexError):
+        pokemon.learns('random move', 'random game')
+
+
 def test_pokemon_str_function(responses):
     responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
                   json=sample_pokemon, status=200)

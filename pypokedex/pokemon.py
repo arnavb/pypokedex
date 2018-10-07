@@ -92,8 +92,8 @@ class Pokemon:
     # def __repr__(self):
     #     return f'Pokemon(json_data={self._json_data})'
 
-    def __str__(self):
-        return f'Pokemon(dex={self.dex}, name=\'{self.name}\')'
+    def __str__(self) -> str:
+        return f'Pokemon(dex={self.dex}, name=\'{self.name}\')'  # type: ignore
 
     def __eq__(self, other) -> bool:
         return self.dex == other.dex

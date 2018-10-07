@@ -216,6 +216,14 @@ def test_pokemon_does_not_learn_move(responses):
     assert not pokemon.learns('random move', 'game_1')
 
 
+def test_pokemon_str_function(responses):
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
+                  json=sample_pokemon, status=200)
+
+    pokemon = pypokedex.get(name='sample')
+    assert str(pokemon) == 'Pokemon(dex=999, name=\'sample\')'
+
+
 def test_pokemon_equality(responses):
     responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',
                   json=sample_pokemon, status=200)
@@ -268,6 +276,7 @@ def test_pokemon_greater_than(responses):
     assert second_pokemon > first_pokemon
     assert not second_pokemon == first_pokemon
     assert not second_pokemon < first_pokemon
+
 
 def test_pokemon_less_than_or_equal_to(responses):
     cloned_sample_pokemon = deepcopy(sample_pokemon)

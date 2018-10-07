@@ -28,6 +28,7 @@ class Move(NamedTuple):
 class Pokemon:
     def __init__(self, json_data) -> None:
         # Load pokemon data
+        # self._json_data = json_data # Store for repr
         try:
             self.dex = json_data['id']
 
@@ -87,6 +88,12 @@ class Pokemon:
             if move.name == move_name:
                 return True
         return False
+
+    # def __repr__(self):
+    #     return f'Pokemon(json_data={self._json_data})'
+
+    def __str__(self):
+        return f'Pokemon(dex={self.dex}, name=\'{self.name}\')'
 
     def __eq__(self, other) -> bool:
         return self.dex == other.dex

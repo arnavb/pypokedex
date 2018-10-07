@@ -27,7 +27,7 @@ class Move(NamedTuple):
 
 class Pokemon:
     def __init__(self, json_data) -> None:
-        # Load pokemon data
+        """Loads and stores required pokemon data"""
         # self._json_data = json_data # Store for repr
         try:
             self.dex = json_data['id']
@@ -77,9 +77,12 @@ class Pokemon:
                                  'the current Pokemon!') from error
 
     def exists_in(self, game: str) -> bool:
+        """Checks whether the current Pokemon exists in the specified game."""
         return game in self.moves
 
     def learns(self, move_name: str, game: str) -> bool:
+        """Checks whether the current Pokemon learn the specified move
+        in the specified game."""
         if not self.exists_in(game):
             raise PyPokedexError(f'{self.name} is not '  # type: ignore
                                  f'obtainable in {game}!')
@@ -93,6 +96,7 @@ class Pokemon:
     #     return f'Pokemon(json_data={self._json_data})'
 
     def __str__(self) -> str:
+        """Returns a human-readable represenation of the current Pokemon."""
         return f'Pokemon(dex={self.dex}, name=\'{self.name}\')'  # type: ignore
 
     def __eq__(self, other) -> bool:

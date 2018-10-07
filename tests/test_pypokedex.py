@@ -269,6 +269,37 @@ def test_pokemon_greater_than(responses):
     assert not second_pokemon == first_pokemon
     assert not second_pokemon < first_pokemon
 
+def test_pokemon_less_than_or_equal_to(responses):
+    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon['id'] = 998
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/998',
+                  json=cloned_sample_pokemon, status=200)
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
+                  json=sample_pokemon, status=200)
+
+    first_pokemon = pypokedex.get(dex=998)
+    second_pokemon = pypokedex.get(dex=999)
+    third_pokemon = pypokedex.get(dex=999)
+    assert first_pokemon <= second_pokemon
+    assert second_pokemon <= third_pokemon
+    assert not third_pokemon <= first_pokemon
+
+
+def test_pokemon_greater_than_or_equal_to(responses):
+    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon['id'] = 998
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/998',
+                  json=cloned_sample_pokemon, status=200)
+    responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/999',
+                  json=sample_pokemon, status=200)
+
+    first_pokemon = pypokedex.get(dex=998)
+    second_pokemon = pypokedex.get(dex=999)
+    third_pokemon = pypokedex.get(dex=999)
+    assert second_pokemon >= first_pokemon
+    assert third_pokemon >= second_pokemon
+    assert not first_pokemon >= third_pokemon
+
 
 def test_404_pokemon_not_found(responses):
     responses.add(responses.GET, 'https://pokeapi.co/api/v2/pokemon/sample',

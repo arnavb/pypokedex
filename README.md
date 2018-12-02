@@ -114,3 +114,7 @@ members are provided for its consumption:
 ## License
 
 This library is licensed under the [MIT License](https://github.com/arnavb/pypokedex/blob/master/LICENSE).
+
+### Dependency Licenses
+
+This library depends on [requests](https://github.com/requests/requests), which is licensed under the [Apache 2.0 License](https://github.com/requests/requests/blob/master/LICENSE).

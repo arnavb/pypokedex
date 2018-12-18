@@ -70,8 +70,8 @@ members are provided for its consumption:
 
 - `dex` (`int`): Contains the _national_ Pokedex number of the current Pokemon.
 - `name` (`str`): Contains the name of the current Pokemon.
-- `height` (`int`): Contains the height of the current Pokemon in decimeters.
-- `weight` (`int`): Contains the weight of the current Pokemon in hectograms.
+- `height` (`int`): Contains the height of the current Pokemon in decimeters (see [veekun/pokedex#249](https://github.com/veekun/pokedex/issues/249)).
+- `weight` (`int`): Contains the weight of the current Pokemon in hectograms (see [veekun/pokedex#249](https://github.com/veekun/pokedex/issues/249)).
 - `types` (`List[str]`): Contains a list of strings with the name of the current
   Pokemon's types.
 - `abilities` (`List[Ability]`): Contains a list of named tuples called `Ability`.

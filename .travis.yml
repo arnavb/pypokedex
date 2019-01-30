@@ -3,6 +3,8 @@ language: python
 branches:
   only:
     - master
+    # Tags
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
 cache: pip
 
@@ -31,4 +33,3 @@ jobs:
         distributions: "sdist bdist_wheel"
         on:
           tags: true
-          all_branches: true

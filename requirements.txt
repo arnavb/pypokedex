@@ -1,7 +1,0 @@
--e .
-flake8
-mypy
-pytest
-pytest-cov
-responses
-twine

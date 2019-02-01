@@ -8,6 +8,11 @@ branches:
 
 cache: pip
 
+before_script:
+  - pip install pipenv
+  - pipenv install --dev
+  - pipenv shell
+
 jobs:
   include:
     - stage: test

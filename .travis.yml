@@ -11,13 +11,13 @@ cache: pip
 before_script:
   - pip install pipenv
   - pipenv install --dev
+  - pipenv shell
 
 jobs:
   include:
     - stage: test
       python: '3.6'
       script:
-        - pipenv shell
         - pytest --cov=pypokedex
         - mypy pypokedex
         - flake8

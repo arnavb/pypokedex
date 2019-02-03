@@ -17,12 +17,13 @@ jobs:
     - stage: test
       python: '3.6'
       script:
-        - pipenv run pytest --cov=pypokedex
-        - pipenv run mypy pypokedex
-        - pipenv run flake8
+        - pipenv shell
+        - pytest --cov=pypokedex
+        - mypy pypokedex
+        - flake8
       after_success: bash <(curl -s https://codecov.io/bash)
     - python: '3.7'
-      script: pipenv run pytest
+      script: pytest
       dist: xenial
       sudo: true
     - stage: deploy

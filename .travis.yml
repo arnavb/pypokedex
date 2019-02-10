@@ -8,17 +8,21 @@ branches:
 
 cache: pip
 
+before_script:
+  - pip install pipenv
+  - pipenv install --dev
+
 jobs:
   include:
     - stage: test
       python: '3.6'
       script:
-        - pytest --cov=pypokedex
-        - mypy pypokedex
-        - flake8
+        - pipenv run pytest --cov=pypokedex
+        - pipenv run mypy pypokedex
+        - pipenv run flake8
       after_success: bash <(curl -s https://codecov.io/bash)
     - python: '3.7'
-      script: pytest
+      script: pipenv run pytest
       dist: xenial
       sudo: true
     - stage: deploy

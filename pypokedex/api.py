@@ -7,6 +7,7 @@ from pypokedex.pokemon import Pokemon
 
 POKEAPI_BASE_URL = "https://pokeapi.co/api/v2/pokemon"
 
+
 @lru_cache(maxsize=None)
 def get(**kwargs) -> Pokemon:
     if len(kwargs) != 1:

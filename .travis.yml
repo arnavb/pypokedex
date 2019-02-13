@@ -19,7 +19,8 @@ jobs:
       script:
         - pipenv run pytest --cov=pypokedex
         - pipenv run mypy pypokedex
-        - pipenv run flake8
+        - pipenv run black --check
+        - pipenv run pylint pypokedex || true
       after_success: bash <(curl -s https://codecov.io/bash)
     - python: '3.7'
       script: pipenv run pytest

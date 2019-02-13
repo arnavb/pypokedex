@@ -19,8 +19,8 @@ jobs:
       script:
         - pipenv run pytest --cov=pypokedex
         - pipenv run mypy pypokedex
-        - pipenv run black --check
-        - pipenv run pylint pypokedex || true
+        - pipenv run black --check pypokedex
+        - pipenv run pylint pypokedex || true # To not fail the build
       after_success: bash <(curl -s https://codecov.io/bash)
     - python: '3.7'
       script: pipenv run pytest

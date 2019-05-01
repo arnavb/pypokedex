@@ -45,7 +45,7 @@ setup(
     packages=find_packages(exclude=['tests', 'docs']),
 
     install_requires=[
-        'requests>=2.20.0'
+        'requests>=2.21.0'
     ],
 
     python_requires='>=3.6'

@@ -62,7 +62,6 @@ pokemon2 = pypokedex.get(name=NAME)  # NAME must be a valid name of a pokemon
 - A `PyPokedexError` will be raised if data is missing when parsing the returned
   JSON from PokeAPI (usually this indicates an API change).
 
-
 Once a valid `pypokedex.pokemon.Pokemon` object is returned, the following
 members are provided for its consumption:
 
@@ -72,6 +71,7 @@ members are provided for its consumption:
 - `name` (`str`): Contains the name of the current Pokemon.
 - `height` (`int`): Contains the height of the current Pokemon in decimeters (see [veekun/pokedex#249](https://github.com/veekun/pokedex/issues/249)).
 - `weight` (`int`): Contains the weight of the current Pokemon in hectograms (see [veekun/pokedex#249](https://github.com/veekun/pokedex/issues/249)).
+- `base_experience` (`intt`): Contains the base experience yield of the current Pokemon.
 - `types` (`List[str]`): Contains a list of strings with the name of the current
   Pokemon's types.
 - `abilities` (`List[Ability]`): Contains a list of named tuples called `Ability`.
@@ -108,6 +108,7 @@ members are provided for its consumption:
   comparison operators for Pokemon objects in terms of their Pokedex number.
 
 #### Possible Exceptions
+
 - `learns` will raise a `PyPokedexError` if the current Pokemon does not exist
   in the game specified.
 

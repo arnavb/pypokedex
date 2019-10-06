@@ -32,7 +32,7 @@ class Pokemon:
         try:
             self.dex = json_data["id"]
 
-            for pokemon_info in ["name", "height", "weight"]:
+            for pokemon_info in ["name", "height", "weight", "base_experience"]:
                 setattr(self, pokemon_info, json_data[pokemon_info])
 
             stat_dict = {}

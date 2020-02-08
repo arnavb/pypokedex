@@ -1,11 +1,5 @@
 language: python
 
-# branches:
-#   only:
-#     - master
-#     # Tags
-#     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
-
 cache: pip
 
 before_script:
@@ -15,23 +9,23 @@ before_script:
 jobs:
   include:
     - stage: test
-      python: '3.6'
+      python: "3.6"
       script:
         - pipenv run pytest --cov=pypokedex
         - pipenv run mypy pypokedex
         - pipenv run black --check pypokedex
         - pipenv run pylint pypokedex || true # To not fail the build
       after_success: bash <(curl -s https://codecov.io/bash)
-    - python: '3.7'
+    - python: "3.7"
       script: pipenv run pytest
-      dist: xenial
-      sudo: true
+    - python: "3.8"
+      script: pipenv run pytest
     - stage: deploy
-      python: '3.6'
+      python: "3.6"
       script: skip
       deploy:
         provider: pypi
-        user: 'arnavb'
+        username: "arnavb"
         password:
           secure: LyFCxViZHVR1GcniOYCxOocA0uhpOhPM2A9pjqFWPU1MIW9EQvDiqAOhsxXXVwEFF5BRX7qZepPX0iBZSAl1cC8iXp2L6rn5cERyXDUWJHLlNnKjFVo6Er8T87bTFJOq8FCq3iDZaAkYenNTaPEOVbequnKAffSzKhhjaNStk/hokaCBaJWjpKeS/mYFh5ukhq795413LVyVcKu0Z/hdHOisGzN6hfZomWvqBQ+v0N2WWOWHzlvXTBrS44JkUlAHoXlLLWeNzVYTJHN4q2kb/4WA6VDmJefbRiIiZrCpgs66WUCqF0jZuqGgi3Wi4NOI3iKnlGhxC38npcEljvlh2UpyazvkbEm7fTqnquT6cbLrKJZqZ8rulMIfjnN9X7VUu5uL22wtxgNsoYNOZVNHpsXdMdBbLBGU7uYOChGV1Hd9akiG8OGHK0bjUpA6IKtimH5rPU3Ey5Hpfu9E5S7kXhl6Tfxo7w1mn1F4Aejivi4vFoUXc3//XTGJILAuTi7SwLA+CR3eqVWrT7ZiLLie53bg8rknncFwm5Zd5O1N962fz/gePr/GPZ1opeh1fdpy7wNk0FGzonTre2eNq0HmpZ2pfwnGxMGqk9U87z0+YxSxQaT8AmL5WLPHtav9PhE7EnFgcPV7vnYwL2FAP8/BFyPpC9elatfPIr9ndMqysTk=
         skip_cleanup: true

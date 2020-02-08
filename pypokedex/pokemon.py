@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from typing import DefaultDict, List, NamedTuple
+from typing import DefaultDict, List, NamedTuple, Dict
 
 from pypokedex.exceptions import PyPokedexError
 
@@ -25,10 +25,14 @@ class Move(NamedTuple):
     level: int
 
 
+class Sprites(NamedTuple):
+    front: Dict[str, str]
+    back: Dict[str, str]
+
+
 class Pokemon:
     def __init__(self, json_data) -> None:
         """Loads and stores required pokemon data"""
-        # self._json_data = json_data # Store for repr
         try:
             self.dex = json_data["id"]
 
@@ -73,9 +77,18 @@ class Pokemon:
                         Move(move_name, learn_method, learn_level)
                     )
 
+            self.sprites: Sprites = Sprites(front={}, back={})
+            for sprite, url in json_data["sprites"].items():
+                sprite_direction, sprite_type = sprite.split("_", 1)
+
+                if sprite_direction == "front":
+                    self.sprites.front[sprite_type] = url
+                else:
+                    self.sprites.back[sprite_type] = url
+
         except KeyError as error:
             raise PyPokedexError(
-                "A required piece of data was not found for" "the current Pokemon!"
+                "A required piece of data was not found for the current Pokemon!"
             ) from error
 
     def exists_in(self, game: str) -> bool:
@@ -87,7 +100,9 @@ class Pokemon:
         in the specified game."""
         if not self.exists_in(game):
             raise PyPokedexError(
-                f"{self.name} is not " f"obtainable in {game}!"  # type: ignore
+                # pylint: disable=no-member
+                f"{self.name} is not "  # type: ignore
+                f"obtainable in {game}!"
             )
 
         for move in self.moves[game]:
@@ -100,6 +115,7 @@ class Pokemon:
 
     def __str__(self) -> str:
         """Returns a human-readable represenation of the current Pokemon."""
+        # pylint: disable=no-member
         return f"Pokemon(dex={self.dex}, name='{self.name}')"  # type: ignore
 
     def __eq__(self, other) -> bool:

@@ -1,3 +1,5 @@
+# pylint: disable=redefined-outer-name
+
 from copy import deepcopy
 
 import pytest
@@ -44,10 +46,20 @@ sample_pokemon = {
             ],
         }
     ],
+    "sprites": {
+        "back_default": "default_back_url",
+        "back_female": None,
+        "back_shiny": "shiny_back_url",
+        "back_shiny_female": None,
+        "front_default": "default_front_url",
+        "front_female": None,
+        "front_shiny": "front_shiny_url",
+        "front_shiny_female": None,
+    },
 }
 
 
-def _is_valid_sample_pokemon(pokemon: pypokedex.pokemon.Pokemon):
+def _is_properly_initialized_pokemon_object(pokemon: pypokedex.pokemon.Pokemon):
     return (
         pokemon.dex == 999
         and pokemon.name == "sample"
@@ -68,6 +80,21 @@ def _is_valid_sample_pokemon(pokemon: pypokedex.pokemon.Pokemon):
         == pypokedex.pokemon.Move("move_1", "tutor", None)
         and pokemon.moves["game_2"][0]  # noqa
         == pypokedex.pokemon.Move("move_1", "level-up", 5)
+        and pokemon.sprites
+        == pypokedex.pokemon.Sprites(
+            front={
+                "default": "default_front_url",
+                "female": None,
+                "shiny": "front_shiny_url",
+                "shiny_female": None,
+            },
+            back={
+                "default": "default_back_url",
+                "female": None,
+                "shiny": "shiny_back_url",
+                "shiny_female": None,
+            },
+        )
     )  # noqa
 
 
@@ -115,7 +142,7 @@ def test_get_pokemon_by_name(responses):
 
     pokemon = pypokedex.get(name="sample")
 
-    assert _is_valid_sample_pokemon(pokemon)
+    assert _is_properly_initialized_pokemon_object(pokemon)
 
 
 def test_get_pokemon_by_dex(responses):
@@ -128,7 +155,7 @@ def test_get_pokemon_by_dex(responses):
 
     pokemon = pypokedex.get(dex=999)
 
-    assert _is_valid_sample_pokemon(pokemon)
+    assert _is_properly_initialized_pokemon_object(pokemon)
 
 
 def test_pokemon_existence_in_games(responses):

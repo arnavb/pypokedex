@@ -95,6 +95,8 @@ members are provided for its consumption:
     current move (according to PokeAPI).
   - `level` (`int`): The level the current Pokemon learns the current move if
     `learn_method` is `level-up`, `None` otherwise.
+- `sprites` (`Sprites`): Contains two dictionaries, `front` and `back` representing the respective
+  sprites of the current Pokemon. The keys in the dictionary are [Pokeapi sprite keys](https://pokeapi.co/docs/v2.html#pokemonsprites) without the direction prefix (e.g `back_default` is just `default` in the `back` dictionary).
 
 ### Member Functions
 

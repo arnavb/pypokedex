@@ -7,6 +7,7 @@ import responses as rsps  # So it can be later redefined as a function
 import requests
 
 import pypokedex
+from pypokedex.pokemon import Ability, BaseStats, Move, Pokemon, Sprites
 from pypokedex.exceptions import PyPokedexError, PyPokedexHTTPError
 
 # Sample pokemon with only essential data included
@@ -59,7 +60,7 @@ sample_pokemon = {
 }
 
 
-def _is_properly_initialized_pokemon_object(pokemon: pypokedex.pokemon.Pokemon):
+def _is_properly_initialized_pokemon(pokemon: Pokemon):
     return (
         pokemon.dex == 999
         and pokemon.name == "sample"
@@ -67,21 +68,17 @@ def _is_properly_initialized_pokemon_object(pokemon: pypokedex.pokemon.Pokemon):
         and pokemon.weight == 201.2
         and pokemon.base_experience == 200
         and pokemon.types == ["type_1", "type_2"]
-        and pokemon.abilities[0] == pypokedex.pokemon.Ability("ability_1", True)
-        and pokemon.abilities[1]  # noqa
-        == pypokedex.pokemon.Ability("ability_2", False)
-        and pokemon.base_stats.hp == 1  # noqa
-        and pokemon.base_stats.attack == 2
-        and pokemon.base_stats.defense == 3
-        and pokemon.base_stats.sp_atk == 4
-        and pokemon.base_stats.sp_def == 5
-        and pokemon.base_stats.speed == 6
-        and pokemon.moves["game_1"][0]
-        == pypokedex.pokemon.Move("move_1", "tutor", None)
-        and pokemon.moves["game_2"][0]  # noqa
-        == pypokedex.pokemon.Move("move_1", "level-up", 5)
+        and pokemon.abilities
+        == [Ability("ability_1", True), Ability("ability_2", False)]
+        and pokemon.base_stats
+        == BaseStats(hp=1, attack=2, defense=3, sp_atk=4, sp_def=5, speed=6)
+        and pokemon.moves
+        == {
+            "game_1": [Move("move_1", "tutor", None)],
+            "game_2": [Move("move_1", "level-up", 5)],
+        }
         and pokemon.sprites
-        == pypokedex.pokemon.Sprites(
+        == Sprites(
             front={
                 "default": "default_front_url",
                 "female": None,
@@ -142,7 +139,7 @@ def test_get_pokemon_by_name(responses):
 
     pokemon = pypokedex.get(name="sample")
 
-    assert _is_properly_initialized_pokemon_object(pokemon)
+    assert _is_properly_initialized_pokemon(pokemon)
 
 
 def test_get_pokemon_by_dex(responses):
@@ -155,7 +152,7 @@ def test_get_pokemon_by_dex(responses):
 
     pokemon = pypokedex.get(dex=999)
 
-    assert _is_properly_initialized_pokemon_object(pokemon)
+    assert _is_properly_initialized_pokemon(pokemon)
 
 
 def test_pokemon_existence_in_games(responses):

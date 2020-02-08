@@ -101,8 +101,8 @@ class Pokemon:
         if not self.exists_in(game):
             raise PyPokedexError(
                 # pylint: disable=no-member
-                f"{self.name} is not "
-                f"obtainable in {game}!"  # type: ignore
+                f"{self.name} is not "  # type: ignore
+                f"obtainable in {game}!"
             )
 
         for move in self.moves[game]:

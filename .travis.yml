@@ -1,10 +1,10 @@
 language: python
 
-branches:
-  only:
-    - master
-    # Tags
-    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+# branches:
+#   only:
+#     - master
+#     # Tags
+#     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
 cache: pip
 

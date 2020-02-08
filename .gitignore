@@ -132,3 +132,4 @@ pip-selfcheck.json
 # End of https://www.gitignore.io/api/python
 
 .vscode/
+.DS_Store

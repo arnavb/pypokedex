@@ -20,6 +20,7 @@ jobs:
       script: pipenv run pytest
     - python: "3.8"
       script: pipenv run pytest
+    # Deployment script
     - stage: deploy
       python: "3.6"
       script: skip
@@ -32,3 +33,6 @@ jobs:
         distributions: "sdist bdist_wheel"
         on:
           tags: true
+  # Some weird dependency issue occurs with typed-ast
+  allow_failures:
+    - python: "3.8"

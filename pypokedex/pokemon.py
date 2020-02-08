@@ -43,7 +43,7 @@ class Pokemon:
     sprites: Sprites
 
     def __init__(self, json_data) -> None:
-        """Loads and stores required pokemon datas"""
+        """Loads and stores required pokemon data"""
         try:
             self.dex = json_data["id"]
 

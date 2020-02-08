@@ -31,6 +31,17 @@ class Sprites(NamedTuple):
 
 
 class Pokemon:
+    dex: int
+    name: str
+    height: int
+    weight: int
+    base_experience: int
+    base_stats: BaseStats
+    abilities: List[Ability]
+    types: List[str]
+    moves: DefaultDict[str, List[Move]]
+    sprites: Sprites
+
     def __init__(self, json_data) -> None:
         """Loads and stores required pokemon data"""
         try:
@@ -61,7 +72,7 @@ class Pokemon:
 
             self.types = [type_["type"]["name"] for type_ in json_data["types"]]
 
-            self.moves: DefaultDict[str, List[Move]] = defaultdict(list)
+            self.moves = defaultdict(list)
 
             for move in json_data["moves"]:
                 move_name = move["move"]["name"]
@@ -77,7 +88,7 @@ class Pokemon:
                         Move(move_name, learn_method, learn_level)
                     )
 
-            self.sprites: Sprites = Sprites(front={}, back={})
+            self.sprites = Sprites(front={}, back={})
             for sprite, url in json_data["sprites"].items():
                 sprite_direction, sprite_type = sprite.split("_", 1)
 

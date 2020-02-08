@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from typing import DefaultDict, List, NamedTuple, Dict
+from typing import DefaultDict, List, NamedTuple, Dict, Optional
 
 from pypokedex.exceptions import PyPokedexError
 
@@ -22,7 +22,7 @@ class BaseStats(NamedTuple):
 class Move(NamedTuple):
     name: str
     learn_method: str
-    level: int
+    level: Optional[int]
 
 
 class Sprites(NamedTuple):

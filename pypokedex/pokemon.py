@@ -60,7 +60,7 @@ class Pokemon:
                     stat_dict[stat_name] = stat_value
                 elif stat_name == "special-attack":
                     stat_dict["sp_atk"] = stat_value
-                elif stat_name == "special-defense":
+                elif stat_name == "special-defense":  # pragma: no branch
                     stat_dict["sp_def"] = stat_value
 
             self.base_stats = BaseStats(**stat_dict)

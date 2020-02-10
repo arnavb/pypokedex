@@ -27,14 +27,14 @@ def get(**kwargs) -> Pokemon:
     except requests.exceptions.HTTPError as error:
         if response.status_code == 404:
             raise PyPokedexHTTPError(
-                "The requested pokemon was not " "found!", 404
+                f"The requested pokemon was not found!", 404
             ) from error
         raise PyPokedexHTTPError(
-            "An HTTP error occurred! " "(Status code: {response.status_code})",
+            f"An HTTP error occurred! (Status code: {response.status_code})",
             response.status_code,
         ) from error
 
     except requests.exceptions.RequestException as error:
-        raise PyPokedexError("An internal requests exception " "occurred!") from error
+        raise PyPokedexError("An internal requests exception occurred!") from error
 
     return Pokemon(response.json())

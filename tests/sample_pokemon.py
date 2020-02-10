@@ -1,4 +1,5 @@
-sample_pokemon = {
+# Sample pokemon with only essential data included
+SAMPLE_POKEMON = {
     "id": 999,
     "name": "sample",
     "height": 200.2,

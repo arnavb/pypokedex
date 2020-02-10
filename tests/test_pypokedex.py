@@ -9,8 +9,7 @@ import pypokedex
 from pypokedex.pokemon import Ability, BaseStats, Move, Pokemon, Sprites
 from pypokedex.exceptions import PyPokedexError, PyPokedexHTTPError
 
-# Sample pokemon with only essential data included
-from tests.sample_pokemon import sample_pokemon
+from tests.sample_pokemon import SAMPLE_POKEMON
 from tests.fixtures import responses
 
 
@@ -71,7 +70,7 @@ def test_get_pokemon_by_name(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/sample",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -84,7 +83,7 @@ def test_get_pokemon_by_dex(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/999",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -97,7 +96,7 @@ def test_pokemon_existence_in_games(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/sample",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -110,7 +109,7 @@ def test_pokemon_non_existence_in_games(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/sample",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -123,7 +122,7 @@ def test_pokemon_learns_move(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/sample",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -137,7 +136,7 @@ def test_pokemon_does_not_learn_move(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/sample",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -152,7 +151,7 @@ def test_pokemon_does_not_learn_move_because_it_is_not_in_the_specified_game(
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/sample",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -166,7 +165,7 @@ def test_pokemon_str_function(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/sample",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -178,13 +177,13 @@ def test_pokemon_equality(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/sample",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/999",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -194,7 +193,7 @@ def test_pokemon_equality(responses):
 
 
 def test_pokemon_inequality(responses):
-    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon = deepcopy(SAMPLE_POKEMON)
     cloned_sample_pokemon["id"] = 998
     responses.add(
         responses.GET,
@@ -205,7 +204,7 @@ def test_pokemon_inequality(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/999",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -215,7 +214,7 @@ def test_pokemon_inequality(responses):
 
 
 def test_pokemon_less_than(responses):
-    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon = deepcopy(SAMPLE_POKEMON)
     cloned_sample_pokemon["id"] = 998
     responses.add(
         responses.GET,
@@ -226,7 +225,7 @@ def test_pokemon_less_than(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/999",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -238,7 +237,7 @@ def test_pokemon_less_than(responses):
 
 
 def test_pokemon_greater_than(responses):
-    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon = deepcopy(SAMPLE_POKEMON)
     cloned_sample_pokemon["id"] = 998
     responses.add(
         responses.GET,
@@ -249,7 +248,7 @@ def test_pokemon_greater_than(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/999",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -261,7 +260,7 @@ def test_pokemon_greater_than(responses):
 
 
 def test_pokemon_less_than_or_equal_to(responses):
-    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon = deepcopy(SAMPLE_POKEMON)
     cloned_sample_pokemon["id"] = 998
     responses.add(
         responses.GET,
@@ -272,7 +271,7 @@ def test_pokemon_less_than_or_equal_to(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/999",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -285,7 +284,7 @@ def test_pokemon_less_than_or_equal_to(responses):
 
 
 def test_pokemon_greater_than_or_equal_to(responses):
-    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon = deepcopy(SAMPLE_POKEMON)
     cloned_sample_pokemon["id"] = 998
     responses.add(
         responses.GET,
@@ -296,7 +295,7 @@ def test_pokemon_greater_than_or_equal_to(responses):
     responses.add(
         responses.GET,
         "https://pokeapi.co/api/v2/pokemon/999",
-        json=sample_pokemon,
+        json=SAMPLE_POKEMON,
         status=200,
     )
 
@@ -342,7 +341,7 @@ def test_requests_errors(responses):
 
 
 def test_missing_data_keys_for_pokemon(responses):
-    cloned_sample_pokemon = deepcopy(sample_pokemon)
+    cloned_sample_pokemon = deepcopy(SAMPLE_POKEMON)
     del cloned_sample_pokemon["weight"]
     responses.add(
         responses.GET,

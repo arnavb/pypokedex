@@ -44,6 +44,8 @@ class Pokemon:
 
     def __init__(self, json_data) -> None:
         """Loads and stores required pokemon data"""
+
+        # pylint: disable=too-many-locals
         try:
             self.dex = json_data["id"]
 
@@ -111,7 +113,6 @@ class Pokemon:
         in the specified game."""
         if not self.exists_in(game):
             raise PyPokedexError(
-                # pylint: disable=no-member
                 f"{self.name} is not "  # type: ignore
                 f"obtainable in {game}!"
             )
@@ -119,14 +120,11 @@ class Pokemon:
         for move in self.moves[game]:
             if move.name == move_name:
                 return True
+
         return False
 
-    # def __repr__(self):
-    #     return f'Pokemon(json_data={self._json_data})'
-
     def __str__(self) -> str:
-        """Returns a human-readable represenation of the current Pokemon."""
-        # pylint: disable=no-member
+        """Returns a human-readable representation of the current Pokemon."""
         return f"Pokemon(dex={self.dex}, name='{self.name}')"  # type: ignore
 
     def __eq__(self, other) -> bool:

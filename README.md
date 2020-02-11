@@ -48,6 +48,16 @@ pokemon = pypokedex.get(dex=DEX)  # DEX must be a valid _national_ pokedex
 pokemon2 = pypokedex.get(name=NAME)  # NAME must be a valid name of a pokemon
 ```
 
+In addition to the above function, the following classes are provided as part of the public API:
+ 
+ - `Pokemon` (returned by `get`),
+ - `BaseStats`,
+ - `Ability`,
+ - `Sprites`,
+ - and `Move`
+ 
+Note that they shouldn't be initialized through client code; their purpose is mainly for type annotations.
+
 ### Possible Exceptions
 
 - A `TypeError` will be raised if the wrong number of arguments or the wrong

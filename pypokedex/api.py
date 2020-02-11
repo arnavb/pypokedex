@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Union
 
 import requests
 
@@ -13,10 +14,12 @@ def get(**kwargs) -> Pokemon:
     if len(kwargs) != 1:
         raise TypeError("pypokedex.get() expects expects only 1 argument!")
 
+    subpage: Union[int, str]
+
     if "dex" in kwargs and isinstance(kwargs["dex"], int):
         subpage = kwargs["dex"]
     elif "name" in kwargs and isinstance(kwargs["name"], str):
-        subpage = kwargs["name"].lower()  # type: ignore
+        subpage = kwargs["name"].lower()
     else:
         raise TypeError("Arguments were either of an incorrect type or value!")
 

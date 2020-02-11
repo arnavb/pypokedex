@@ -26,8 +26,8 @@ class Move(NamedTuple):
 
 
 class Sprites(NamedTuple):
-    front: Dict[str, str]
-    back: Dict[str, str]
+    front: Dict[str, Optional[str]]
+    back: Dict[str, Optional[str]]
 
 
 class Pokemon:

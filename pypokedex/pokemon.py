@@ -1,5 +1,4 @@
 from collections import defaultdict
-
 from typing import DefaultDict, List, NamedTuple, Dict, Optional
 
 from pypokedex.exceptions import PyPokedexError

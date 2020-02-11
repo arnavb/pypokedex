@@ -2,7 +2,7 @@
     <img src='https://raw.githubusercontent.com/arnavb/pypokedex/master/assets/logo.png'/>
 </p>
 
-[![Travis Build Status](https://travis-ci.org/arnavb/pypokedex.svg?branch=master)](https://travis-ci.org/arnavb/pypokedex)
+[![Travis Build Status](https://travis-ci.org/arnavb/pypokedex.svg?branch=master)](https://travis-ci.com/arnavb/pypokedex)
 [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/wpbab6ojfvoe1eg2/branch/master?svg=true)](https://ci.appveyor.com/project/arnavb/pypokedex/branch/master)
 [![Codecov](https://img.shields.io/codecov/c/github/arnavb/pypokedex.svg)](https://codecov.io/gh/arnavb/pypokedex)
 [![PyPI](https://img.shields.io/pypi/v/pypokedex.svg)](https://pypi.org/project/pypokedex/)

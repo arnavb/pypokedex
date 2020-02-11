@@ -56,7 +56,7 @@ In addition to the above function, the following classes are provided as part of
  - `Sprites`,
  - and `Move`
  
-Note that they shouldn't be initialized through client code; their purpose is mainly for type annotations.
+Note that these classes shouldn't be initialized through client code; their purpose is mainly for type annotations.
 
 ### Possible Exceptions
 

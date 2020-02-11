@@ -45,7 +45,7 @@ def _is_properly_initialized_pokemon(pokemon: Pokemon):
                 "shiny_female": None,
             },
         )
-    )  # noqa
+    )
 
 
 def test_too_few_get_arguments():

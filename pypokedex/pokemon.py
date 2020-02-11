@@ -112,10 +112,7 @@ class Pokemon:
         """Checks whether the current Pokemon learn the specified move
         in the specified game."""
         if not self.exists_in(game):
-            raise PyPokedexError(
-                f"{self.name} is not "  # type: ignore
-                f"obtainable in {game}!"
-            )
+            raise PyPokedexError(f"{self.name} is not obtainable in {game}!")
 
         for move in self.moves[game]:
             if move.name == move_name:
@@ -125,7 +122,7 @@ class Pokemon:
 
     def __str__(self) -> str:
         """Returns a human-readable representation of the current Pokemon."""
-        return f"Pokemon(dex={self.dex}, name='{self.name}')"  # type: ignore
+        return f"Pokemon(dex={self.dex}, name='{self.name}')"
 
     def __eq__(self, other) -> bool:
         return self.dex == other.dex

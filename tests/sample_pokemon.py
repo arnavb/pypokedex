@@ -1,4 +1,4 @@
-# Sample pokemon with only essential data included
+# Sample pokemon with attributes covered by this package
 SAMPLE_POKEMON = {
     "id": 999,
     "name": "sample",

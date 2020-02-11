@@ -6,7 +6,7 @@ import pytest
 import requests
 
 import pypokedex
-from pypokedex.pokemon import Ability, BaseStats, Move, Pokemon, Sprites
+from pypokedex import Ability, BaseStats, Move, Pokemon, Sprites
 from pypokedex.exceptions import PyPokedexError, PyPokedexHTTPError
 
 from tests.sample_pokemon import SAMPLE_POKEMON

@@ -15,6 +15,7 @@ classifiers = [
     "Topic :: Games/Entertainment",
     "Topic :: Software Development :: Libraries",
 ]
+include = ["README.md", "LICENSE"]
 
 [tool.poetry.dependencies]
 python = "^3.6"

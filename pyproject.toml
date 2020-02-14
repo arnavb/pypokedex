@@ -4,6 +4,17 @@ version = "1.4.0"
 description = "A minimal pokedex library"
 authors = ["Arnav Borborah <arnavborborah11@gmail.com>"]
 license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/arnavb/pypokedex#readme"
+repository = "https://github.com/arnavb/pypokedex"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Topic :: Games/Entertainment",
+    "Topic :: Software Development :: Libraries",
+]
 
 [tool.poetry.dependencies]
 python = "^3.6"

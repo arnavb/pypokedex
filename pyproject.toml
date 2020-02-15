@@ -19,7 +19,7 @@ include = ["README.md", "LICENSE"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
-requests = ">=2.21.0"
+requests = "^2.21.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.5"

@@ -20,6 +20,3 @@ jobs:
       script: poetry run pytest
     - python: "3.8"
       script: poetry run pytest
-  # Some weird dependency issue occurs with typed-ast
-  allow_failures:
-    - python: "3.8"

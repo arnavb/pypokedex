@@ -20,3 +20,13 @@ jobs:
       script: poetry run pytest
     - python: "3.8"
       script: poetry run pytest
+
+    - stage: deploy
+      python: "3.6"
+      script: skip
+      deploy:
+        provider: script
+        script: ./deploy.sh
+        on:
+          tags: true
+        skip_cleanup: true

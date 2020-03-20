@@ -11,6 +11,18 @@ POKEAPI_BASE_URL = "https://pokeapi.co/api/v2/pokemon"
 
 @lru_cache(maxsize=None)
 def get(**kwargs) -> Pokemon:
+    """Get a Pokemon object based on exactly ONE of the criteria specified
+    in the keyword argument ``kwargs``.
+
+    :param name: The name of the Pokemon
+    :type name: str:
+
+    :param dex: The national Pokedex number of the Pokemon.
+    :type name: int:
+
+    :return: An instance of a :class:`Pokemon` if no errors occurred.
+    """
+
     if len(kwargs) != 1:
         raise TypeError("pypokedex.get() expects expects only 1 argument!")
 

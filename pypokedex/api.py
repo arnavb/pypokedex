@@ -12,15 +12,23 @@ POKEAPI_BASE_URL = "https://pokeapi.co/api/v2/pokemon"
 @lru_cache(maxsize=None)
 def get(**kwargs) -> Pokemon:
     """Get a Pokemon object based on exactly ONE of the criteria specified
-    in the keyword argument ``kwargs``.
+    in the keyword argument ``kwargs``
 
-    :param name: The name of the Pokemon
+    :key name: The name of the Pokemon
     :type name: str:
 
-    :param dex: The national Pokedex number of the Pokemon.
+    :key dex: The national Pokedex number of the Pokemon
     :type name: int:
 
-    :return: An instance of a :class:`Pokemon` if no errors occurred.
+    :raises TypeError: if exactly one argument isn't passed, ``dex`` or ``name``
+        are of the wrong types, or if they aren't prresent
+    :raises PyPokedexHTTPError: if an non-success HTTP status code is returned
+        from PokeAPI while retrieving Pokemon data
+    :raises PyPokedexError: if an unexpected HTTP error occurs while retrieving
+        Pokemon data
+
+    :return: An instance of a :class:`Pokemon` fitting the passed criteria
+        if no errors occurred
     """
 
     if len(kwargs) != 1:

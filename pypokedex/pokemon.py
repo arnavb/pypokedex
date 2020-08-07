@@ -44,7 +44,7 @@ class Pokemon:
     def __init__(self, json_data) -> None:
         """Loads and stores required pokemon data"""
 
-        # pylint: disable=too-many-locals
+        # pylint: disable=too-many-locals, too-many-branches
         try:
             self.dex = json_data["id"]
 

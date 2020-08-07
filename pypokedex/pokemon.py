@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import DefaultDict, List, NamedTuple, Dict, Optional
+from typing import DefaultDict, Dict, List, NamedTuple, Optional
 
 from pypokedex.exceptions import PyPokedexError
 
@@ -90,13 +90,19 @@ class Pokemon:
                     )
 
             self.sprites = Sprites(front={}, back={})
-            for sprite, url in json_data["sprites"].items():
-                sprite_direction, sprite_type = sprite.split("_", 1)
+            other_sprites: Dict[str, Sprites] = {}
 
-                if sprite_direction == "front":
-                    self.sprites.front[sprite_type] = url
+            for sprite_key, associated_data in json_data["sprites"].items():
+                if sprite_key in ["other", "versions"]:
+                    # TODO: Implement handling for other sprites
+                    pass
                 else:
-                    self.sprites.back[sprite_type] = url
+                    sprite_direction, sprite_type = sprite_key.split("_", 1)
+
+                    if sprite_direction == "front":
+                        self.sprites.front[sprite_type] = associated_data
+                    else:
+                        self.sprites.back[sprite_type] = associated_data
 
         except KeyError as error:
             raise PyPokedexError(

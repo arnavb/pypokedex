@@ -13,7 +13,7 @@ jobs:
       script:
         - poetry run pytest --cov=pypokedex
         - poetry run mypy pypokedex
-        - poetry run pylint pypokedex
+        - poetry run pylint pypokedex --exit-zero
         - poetry run black --check pypokedex
       after_success: bash <(curl -s https://codecov.io/bash)
     - python: "3.7"

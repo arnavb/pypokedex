@@ -105,8 +105,9 @@ members are provided for its consumption:
     current move (according to PokeAPI).
   - `level` (`int`): The level the current Pokemon learns the current move if
     `learn_method` is `level-up`, `None` otherwise.
-- `sprites` (`Sprites`): Contains two dictionaries, `front` and `back` representing the respective
-  sprites of the current Pokemon. The keys in the dictionary are [Pokeapi sprite keys](https://pokeapi.co/docs/v2.html#pokemonsprites) without the direction prefix (e.g `back_default` is just `default` in the `back` dictionary).
+- `sprites` (`Sprites`): Contains two dictionaries, `front` and `back` representing the respective sprites of the current Pokemon. The keys in the dictionary are [Pokeapi sprite keys](https://pokeapi.co/docs/v2.html#pokemonsprites) without the direction prefix (e.g `back_default` is just `default` in the `back` dictionary).
+- `other_sprites` (`Dict[str, Sprites]`): Contains a mapping of sprite groups to sprites (sprites are stored in the same way as the `sprites` instance variable.
+- `version_sprites` (`Dict[str, Dict[str, Sprites]]`): Contains a mapping of generations to games to sprites. Note that like the API itself, keys are included for all generations and games, despite the fact that those Pokemon may not exist in said generation or game. e.g `pypokedex.get(name='garchomp')` would include keys for generation 1 through 3, even though it was introduced in generation 4.
 
 ### Member Functions
 

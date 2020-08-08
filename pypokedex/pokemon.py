@@ -1,7 +1,9 @@
 from collections import defaultdict
-from typing import DefaultDict, List, NamedTuple, Dict, Optional
+from typing import DefaultDict, Dict, List, NamedTuple, Optional
 
 from pypokedex.exceptions import PyPokedexError
+
+SpriteKeys = Dict[str, str]
 
 
 class Ability(NamedTuple):
@@ -40,11 +42,13 @@ class Pokemon:
     types: List[str]
     moves: DefaultDict[str, List[Move]]
     sprites: Sprites
+    other_sprites: Dict[str, Sprites]
+    version_sprites: Dict[str, Dict[str, Sprites]]
 
     def __init__(self, json_data) -> None:
         """Loads and stores required pokemon data"""
 
-        # pylint: disable=too-many-locals
+        # pylint: disable=too-many-locals, too-many-branches
         try:
             self.dex = json_data["id"]
 
@@ -89,19 +93,52 @@ class Pokemon:
                         Move(move_name, learn_method, learn_level)
                     )
 
-            self.sprites = Sprites(front={}, back={})
-            for sprite, url in json_data["sprites"].items():
-                sprite_direction, sprite_type = sprite.split("_", 1)
+            # Regular sprites are currently handled separately because they are at
+            # the same level as other sprites. A better solution might be possible.
+            regular_sprite_keys: SpriteKeys = {}
 
-                if sprite_direction == "front":
-                    self.sprites.front[sprite_type] = url
+            self.other_sprites = {}
+            self.version_sprites = {}
+
+            for sprite_key, associated_data in json_data["sprites"].items():
+                if sprite_key == "other":
+                    for sprite_group, sprites in associated_data.items():
+                        self.other_sprites[sprite_group] = Pokemon._extract_sprites(
+                            sprites
+                        )
+
+                elif sprite_key == "versions":
+                    for generation, games in associated_data.items():
+                        self.version_sprites[generation] = {}
+
+                        for game, sprites in games.items():
+                            self.version_sprites[generation][
+                                game
+                            ] = Pokemon._extract_sprites(sprites)
+
                 else:
-                    self.sprites.back[sprite_type] = url
+                    regular_sprite_keys[sprite_key] = associated_data
+
+            self.sprites = Pokemon._extract_sprites(regular_sprite_keys)
 
         except KeyError as error:
             raise PyPokedexError(
                 "A required piece of data was not found for the current Pokemon!"
             ) from error
+
+    @staticmethod
+    def _extract_sprites(all_sprites: SpriteKeys) -> Sprites:
+        result = Sprites(front={}, back={})
+
+        for sprite, url in all_sprites.items():
+            sprite_direction, sprite_type = sprite.split("_", 1)
+
+            if sprite_direction == "front":
+                result.front[sprite_type] = url
+            else:
+                result.back[sprite_type] = url
+
+        return result
 
     def exists_in(self, game: str) -> bool:
         """Checks whether the current Pokemon exists in the specified game."""

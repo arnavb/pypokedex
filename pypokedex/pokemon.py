@@ -98,9 +98,7 @@ class Pokemon:
             regular_sprite_keys: SpriteKeys = {}
 
             self.other_sprites = {}
-            version_sprite_keys: Dict[
-                str, Dict[str, SpriteKeys]
-            ] = {}  # Generation to game to sprite keys
+            self.version_sprites = {}
 
             for sprite_key, associated_data in json_data["sprites"].items():
                 if sprite_key == "other":
@@ -110,8 +108,13 @@ class Pokemon:
                         )
 
                 elif sprite_key == "versions":
-                    # TODO: Handle version sprites
-                    pass
+                    for generation, games in associated_data.items():
+                        self.version_sprites[generation] = {}
+
+                        for game, sprites in games.items():
+                            self.version_sprites[generation][
+                                game
+                            ] = Pokemon._extract_sprites(sprites)
 
                 else:
                     regular_sprite_keys[sprite_key] = associated_data

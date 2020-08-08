@@ -89,7 +89,7 @@ class Pokemon:
                         Move(move_name, learn_method, learn_level)
                     )
 
-            self.sprites = Sprites(front={}, back={})
+            regular_sprite_keys: Dict[str, str] = {}
             other_sprites: Dict[str, Sprites] = {}
 
             for sprite_key, associated_data in json_data["sprites"].items():
@@ -97,17 +97,28 @@ class Pokemon:
                     # TODO: Implement handling for other sprites
                     pass
                 else:
-                    sprite_direction, sprite_type = sprite_key.split("_", 1)
+                    regular_sprite_keys[sprite_key] = associated_data
 
-                    if sprite_direction == "front":
-                        self.sprites.front[sprite_type] = associated_data
-                    else:
-                        self.sprites.back[sprite_type] = associated_data
+            self.sprites = Pokemon._extract_sprites(regular_sprite_keys)
 
         except KeyError as error:
             raise PyPokedexError(
                 "A required piece of data was not found for the current Pokemon!"
             ) from error
+
+    @staticmethod
+    def _extract_sprites(all_sprites: Dict[str, str]) -> Sprites:
+        result = Sprites(front={}, back={})
+
+        for sprite, url in all_sprites.items():
+            sprite_direction, sprite_type = sprite.split("_", 1)
+
+            if sprite_direction == "front":
+                result.front[sprite_type] = url
+            else:
+                result.back[sprite_type] = url
+
+        return result
 
     def exists_in(self, game: str) -> bool:
         """Checks whether the current Pokemon exists in the specified game."""

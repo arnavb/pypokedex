@@ -3,6 +3,8 @@ from typing import DefaultDict, Dict, List, NamedTuple, Optional
 
 from pypokedex.exceptions import PyPokedexError
 
+SpriteKeys = Dict[str, str]
+
 
 class Ability(NamedTuple):
     name: str
@@ -40,6 +42,8 @@ class Pokemon:
     types: List[str]
     moves: DefaultDict[str, List[Move]]
     sprites: Sprites
+    other_sprites: Dict[str, Sprites]
+    version_sprites: Dict[str, Dict[str, Sprites]]
 
     def __init__(self, json_data) -> None:
         """Loads and stores required pokemon data"""
@@ -89,13 +93,26 @@ class Pokemon:
                         Move(move_name, learn_method, learn_level)
                     )
 
-            regular_sprite_keys: Dict[str, str] = {}
-            other_sprites: Dict[str, Sprites] = {}
+            # Regular sprites are currently handled separately because they are at
+            # the same level as other sprites. A better solution might be possible.
+            regular_sprite_keys: SpriteKeys = {}
+
+            self.other_sprites = {}
+            version_sprite_keys: Dict[
+                str, Dict[str, SpriteKeys]
+            ] = {}  # Generation to game to sprite keys
 
             for sprite_key, associated_data in json_data["sprites"].items():
-                if sprite_key in ["other", "versions"]:
-                    # TODO: Implement handling for other sprites
+                if sprite_key == "other":
+                    for sprite_group, sprites in associated_data.items():
+                        self.other_sprites[sprite_group] = Pokemon._extract_sprites(
+                            sprites
+                        )
+
+                elif sprite_key == "versions":
+                    # TODO: Handle version sprites
                     pass
+
                 else:
                     regular_sprite_keys[sprite_key] = associated_data
 
@@ -107,7 +124,7 @@ class Pokemon:
             ) from error
 
     @staticmethod
-    def _extract_sprites(all_sprites: Dict[str, str]) -> Sprites:
+    def _extract_sprites(all_sprites: SpriteKeys) -> Sprites:
         result = Sprites(front={}, back={})
 
         for sprite, url in all_sprites.items():

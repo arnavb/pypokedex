@@ -15,6 +15,10 @@ fi
 
 echo "Renamed wheel"
 
+# Needed to that env token is read properly. See:
+# https://github.com/python-poetry/poetry/issues/2801#issuecomment-672705712
+poetry config http-basic.pypi "__token__" "${POETRY_PYPI_TOKEN_PYPI}"
+
 if ! poetry publish; then
   echo "Failed to publish pypokedex. Rerun 'poetry publish'. Aborting."
   exit 1

@@ -8,7 +8,7 @@ fi
 echo "Built pypokedex in dist folder"
 
 # Requires rename utility with perl replace support
-if ! rename 's/py3/py36/' dist/pypokedex-1.5.0-py3-none-any.whl; then
+if ! rename 's/py3/py36/' dist/pypokedex-1.5.1-py3-none-any.whl; then
   echo "Unable to rename built wheel. Aborting."
   exit 1
 fi

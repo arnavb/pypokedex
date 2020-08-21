@@ -115,6 +115,7 @@ class Pokemon:
                             if game == "black-white":
                                 # TODO: Temporarily ignore animated sprites for Gen 5 (see #19)
                                 del sprites["animated"]
+
                             self.version_sprites[generation][
                                 game
                             ] = Pokemon._extract_sprites(sprites)

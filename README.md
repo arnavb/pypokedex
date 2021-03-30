@@ -91,8 +91,8 @@ members are provided for its consumption:
 - `base_stats` (`BaseStats`): Contains a named tuple with the current
   Pokemon's base stats stored as follows (all `int`s):
   - `hp`: The base HP of the current Pokemon.
-  - `atk`: The base attack of the current Pokemon.
-  - `def`: The base defense of the current Pokemon.
+  - `attack`: The base attack of the current Pokemon.
+  - `defense`: The base defense of the current Pokemon.
   - `sp_atk`: The base special attack of the current Pokemon.
   - `sp_def`: The base special defense of the current Pokemon.
   - `speed`: The base speed of the current Pokemon.

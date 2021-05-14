@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pypokedex"
-version = "1.5.1"
+version = "1.6.0"
 description = "A minimal pokedex library"
 authors = ["Arnav Borborah <arnavborborah11@gmail.com>"]
 license = "MIT"

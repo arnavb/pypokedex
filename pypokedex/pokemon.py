@@ -165,7 +165,7 @@ class Pokemon:
         return False
 
     def get_descriptions(self, language="en"):
-        """Returns all the descriptions of the Pokemon for the specified language
+        """Returns all the descriptions of the current Pokemon for the specified language
         (en by default)"""
         try:
             response = requests.get(f"{POKEAPI_SPECIES_URL}/{self.dex}", timeout=3)

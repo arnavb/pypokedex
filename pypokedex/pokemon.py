@@ -9,6 +9,7 @@ SpriteKeys = Dict[str, str]
 
 POKEAPI_SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species"
 
+
 class Ability(NamedTuple):
     name: str
     is_hidden: bool
@@ -163,7 +164,9 @@ class Pokemon:
 
         return False
 
-    def get_descriptions(self, language = 'en'):
+    def get_descriptions(self, language="en"):
+        """Returns all the descriptions of the Pokemon for the specified language
+        (en by default)"""
         try:
             response = requests.get(f"{POKEAPI_SPECIES_URL}/{self.dex}", timeout=3)
             response.raise_for_status()

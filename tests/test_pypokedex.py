@@ -409,6 +409,47 @@ def test_requests_errors(responses):
         pypokedex.get(name="sample")
 
 
+def test_description_http_errors(responses):
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon/sample",
+        json=SAMPLE_POKEMON,
+        status=200,
+    )
+
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon-species/999",
+        json={},
+        status=408,
+    )
+    pokemon = pypokedex.get(name="sample")
+
+    with pytest.raises(PyPokedexHTTPError) as not_found:
+        pokemon.get_descriptions()
+
+    assert not_found.value.http_code == 408
+
+
+def test_description_requests_errors(responses):
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon/sample",
+        json=SAMPLE_POKEMON,
+        status=200,
+    )
+
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon-species/999",
+        body=requests.exceptions.RequestException("Some error"),
+    )
+    pokemon = pypokedex.get(name="sample")
+
+    with pytest.raises(PyPokedexError):
+        pokemon.get_descriptions()
+
+
 def test_missing_data_keys_for_pokemon(responses):
     cloned_sample_pokemon = deepcopy(SAMPLE_POKEMON)
     del cloned_sample_pokemon["weight"]

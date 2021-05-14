@@ -9,7 +9,7 @@ import pypokedex
 from pypokedex import Ability, BaseStats, Move, Pokemon, Sprites
 from pypokedex.exceptions import PyPokedexError, PyPokedexHTTPError
 
-from tests.sample_pokemon import SAMPLE_POKEMON
+from tests.sample_pokemon import SAMPLE_POKEMON, SAMPLE_DESCRIPTIONS
 from tests.fixtures import responses
 
 
@@ -146,7 +146,7 @@ def test_pokemon_does_not_learn_move(responses):
 
 
 def test_pokemon_does_not_learn_move_because_it_is_not_in_the_specified_game(
-    responses
+    responses,
 ):  # noqa
     responses.add(
         responses.GET,
@@ -159,6 +159,75 @@ def test_pokemon_does_not_learn_move_because_it_is_not_in_the_specified_game(
 
     with pytest.raises(PyPokedexError):
         pokemon.learns("random move", "random game")
+
+
+def test_pokemon_default_english_descriptions(responses):
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon/sample",
+        json=SAMPLE_POKEMON,
+        status=200,
+    )
+
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon-species/999",
+        json=SAMPLE_DESCRIPTIONS,
+        status=200,
+    )
+
+    pokemon = pypokedex.get(name="sample")
+
+    descriptions = pokemon.get_descriptions()
+
+    assert len(descriptions) == 2
+    assert descriptions["game a"] == "text a"
+    assert descriptions["game b"] == "text b"
+
+
+def test_pokemon_other_descriptions(responses):
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon/sample",
+        json=SAMPLE_POKEMON,
+        status=200,
+    )
+
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon-species/999",
+        json=SAMPLE_DESCRIPTIONS,
+        status=200,
+    )
+
+    pokemon = pypokedex.get(name="sample")
+
+    descriptions = pokemon.get_descriptions(language="other")
+
+    assert len(descriptions) == 1
+    assert descriptions["game a"] == "text c"
+
+
+def test_pokemon_unknwown_description_language(responses):
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon/sample",
+        json=SAMPLE_POKEMON,
+        status=200,
+    )
+
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon-species/999",
+        json=SAMPLE_DESCRIPTIONS,
+        status=200,
+    )
+
+    pokemon = pypokedex.get(name="sample")
+
+    descriptions = pokemon.get_descriptions(language="unknown")
+
+    assert len(descriptions) == 0
 
 
 def test_pokemon_str_function(responses):
@@ -338,6 +407,47 @@ def test_requests_errors(responses):
 
     with pytest.raises(PyPokedexError):
         pypokedex.get(name="sample")
+
+
+def test_description_http_errors(responses):
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon/sample",
+        json=SAMPLE_POKEMON,
+        status=200,
+    )
+
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon-species/999",
+        json={},
+        status=408,
+    )
+    pokemon = pypokedex.get(name="sample")
+
+    with pytest.raises(PyPokedexHTTPError) as not_found:
+        pokemon.get_descriptions()
+
+    assert not_found.value.http_code == 408
+
+
+def test_description_requests_errors(responses):
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon/sample",
+        json=SAMPLE_POKEMON,
+        status=200,
+    )
+
+    responses.add(
+        responses.GET,
+        "https://pokeapi.co/api/v2/pokemon-species/999",
+        body=requests.exceptions.RequestException("Some error"),
+    )
+    pokemon = pypokedex.get(name="sample")
+
+    with pytest.raises(PyPokedexError):
+        pokemon.get_descriptions()
 
 
 def test_missing_data_keys_for_pokemon(responses):

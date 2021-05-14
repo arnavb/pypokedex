@@ -46,3 +46,23 @@ SAMPLE_POKEMON = {
         "front_shiny_female": None,
     },
 }
+
+SAMPLE_DESCRIPTIONS = {
+    "flavor_text_entries": [
+        {
+            "flavor_text": "text a",
+            "language": {"name": "en",},
+            "version": {"name": "game a"},
+        },
+        {
+            "flavor_text": "text b",
+            "language": {"name": "en",},
+            "version": {"name": "game b"},
+        },
+        {
+            "flavor_text": "text c",
+            "language": {"name": "other",},
+            "version": {"name": "game a"},
+        },
+    ]
+}

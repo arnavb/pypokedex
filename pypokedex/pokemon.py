@@ -164,7 +164,7 @@ class Pokemon:
 
         return False
 
-    def get_descriptions(self, language="en"):
+    def get_descriptions(self, language="en") -> Dict[str, str]:
         """Returns all the descriptions of the current Pokemon for the specified language
         (en by default)"""
         try:

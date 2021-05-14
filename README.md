@@ -115,7 +115,7 @@ members are provided for its consumption:
   Pokemon exists in a specific game.
 - `def learns(self, move_name: str, game: str) -> bool`: Method to check
   whether the current Pokemon learns a specific move in a specific game.
-- `def get_descriptions(self, language="en")`: Method to returns all the descriptions of the current Pokemon for the specified language (en by default). **Note**: This function only returns the descriptions as a dictionary. It doesn't store them anywhere on the Pokemon object. This was done since the descriptions are fetched from a separate API endpoint.
+- `def get_descriptions(self, language="en") -> Dict[str, str]`: Method to returns all the descriptions of the current Pokemon for the specified language (en by default). **Note**: This function only returns the descriptions as a dictionary. It doesn't store them anywhere on the Pokemon object. This was done since the descriptions are fetched from a separate API endpoint.
 - `def __str__(self) -> str`: Method to get a string represenation of the
   current Pokemon. This string is of the form: `Pokemon(dex={self.dex}, name='{self.name}')`.
 - `__eq__, __lt__, __gt__, __le__, __ge__`: Methods that implement various

@@ -1,10 +1,13 @@
 from collections import defaultdict
 from typing import DefaultDict, Dict, List, NamedTuple, Optional
 
-from pypokedex.exceptions import PyPokedexError
+import requests
+
+from pypokedex.exceptions import PyPokedexError, PyPokedexHTTPError
 
 SpriteKeys = Dict[str, str]
 
+POKEAPI_SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species"
 
 class Ability(NamedTuple):
     name: str
@@ -159,6 +162,27 @@ class Pokemon:
                 return True
 
         return False
+
+    def get_descriptions(self, language = 'en'):
+        try:
+            response = requests.get(f"{POKEAPI_SPECIES_URL}/{self.dex}", timeout=3)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as error:
+            raise PyPokedexHTTPError(
+                f"An HTTP error occurred! (Status code: {response.status_code})",
+                response.status_code,
+            ) from error
+        except requests.exceptions.RequestException as error:
+            raise PyPokedexError("An internal requests exception occurred!") from error
+
+        flavor_text_entries: List[dict] = response.json()["flavor_text_entries"]
+
+        result = {}
+        for entry in flavor_text_entries:
+            if entry["language"]["name"] == language:
+                result[entry["version"]["name"]] = entry["flavor_text"]
+
+        return result
 
     def __str__(self) -> str:
         """Returns a human-readable representation of the current Pokemon."""

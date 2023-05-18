@@ -18,7 +18,7 @@ classifiers = [
 include = ["README.md", "LICENSE"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.8"
 requests = "^2.21.0"
 
 [tool.poetry.dev-dependencies]

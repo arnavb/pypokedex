@@ -21,7 +21,8 @@ include = ["README.md", "LICENSE"]
 python = "^3.8"
 requests = "^2.21.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.267"
 pytest = "^5.3.5"
 pytest-cov = "^2.8.1"
 responses = "^0.10.9"
@@ -29,9 +30,6 @@ pylint = "^2.4.4"
 black = "^19.10b0"
 twine = "^3.1.1"
 rope = "^0.17.0"
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.0.267"
 
 [build-system]
 requires = ["poetry>=0.12"]

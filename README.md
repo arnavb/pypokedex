@@ -6,6 +6,8 @@
 [![PyPI](https://img.shields.io/pypi/v/pypokedex.svg)](https://pypi.org/project/pypokedex/)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypokedex.svg)
 [![License](https://img.shields.io/github/license/arnavb/pypokedex.svg)](https://github.com/arnavb/pypokedex/blob/master/LICENSE)
+[![Downloads](https://static.pepy.tech/badge/pypokedex)](https://pepy.tech/project/pypokedex)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 PyPokedex is a minimal pokedex library for Python that uses
 [PokeAPI](https://pokeapi.co/) internally to get Pokemon data. A simple example:
@@ -16,7 +18,7 @@ PyPokedex is a minimal pokedex library for Python that uses
 
 ## Requirements
 
-- Python 3.6+
+- Python 3.8+
 
 ## Installing
 

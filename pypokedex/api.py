@@ -1,3 +1,5 @@
+# pyright: reportUnboundVariable=false
+
 from functools import lru_cache
 from typing import Union
 

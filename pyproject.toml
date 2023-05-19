@@ -21,16 +21,26 @@ include = ["README.md", "LICENSE"]
 python = "^3.8"
 requests = "^2.21.0"
 
-[tool.poetry.dev-dependencies]
-pytest = "^5.3.5"
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.267"
+pytest = "^7.3.1"
 pytest-cov = "^2.8.1"
 responses = "^0.10.9"
-mypy = "^0.761"
 pylint = "^2.4.4"
-black = "^19.10b0"
+black = "^23.3.0"
 twine = "^3.1.1"
 rope = "^0.17.0"
+pyright = "^1.1.309"
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+[tool.ruff.per-file-ignores]
+"tests/test_pypokedex.py" = ["F811"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-v"
+testpaths = "tests"

@@ -1,3 +1,5 @@
+# pyright: reportUnboundVariable=false
+
 from collections import defaultdict
 from typing import DefaultDict, Dict, List, NamedTuple, Optional
 
@@ -117,7 +119,8 @@ class Pokemon:
 
                         for game, sprites in games.items():
                             if game == "black-white":
-                                # TODO: Temporarily ignore animated sprites for Gen 5 (see #19)
+                                # TODO: Temporarily ignore animated sprites for Gen 5
+                                # (see #19)
                                 del sprites["animated"]
 
                             self.version_sprites[generation][
@@ -165,8 +168,8 @@ class Pokemon:
         return False
 
     def get_descriptions(self, language="en") -> Dict[str, str]:
-        """Returns all the descriptions of the current Pokemon for the specified language
-        (en by default)"""
+        """Returns all the descriptions of the current Pokemon for the specified
+        language (en by default)"""
         try:
             response = requests.get(f"{POKEAPI_SPECIES_URL}/{self.dex}", timeout=3)
             response.raise_for_status()

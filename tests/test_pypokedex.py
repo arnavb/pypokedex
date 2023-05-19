@@ -1,5 +1,3 @@
-# pylint: disable=redefined-outer-name
-
 from copy import deepcopy
 
 import pytest
@@ -10,7 +8,7 @@ from pypokedex import Ability, BaseStats, Move, Pokemon, Sprites
 from pypokedex.exceptions import PyPokedexError, PyPokedexHTTPError
 
 from tests.sample_pokemon import SAMPLE_POKEMON, SAMPLE_DESCRIPTIONS
-from tests.fixtures import responses
+from tests.fixtures import responses  # noqa: F401
 
 
 def _is_properly_initialized_pokemon(pokemon: Pokemon):

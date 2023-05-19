@@ -5,10 +5,9 @@ from typing import Union
 
 import requests
 
+from pypokedex.constants import POKEAPI_BASE_URL
 from pypokedex.exceptions import PyPokedexError, PyPokedexHTTPError
 from pypokedex.pokemon import Pokemon
-
-POKEAPI_BASE_URL = "https://pokeapi.co/api/v2/pokemon"
 
 
 @lru_cache(maxsize=None)

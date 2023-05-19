@@ -5,11 +5,10 @@ from typing import DefaultDict, Dict, List, NamedTuple, Optional
 
 import requests
 
+from pypokedex.constants import POKEAPI_SPECIES_URL
 from pypokedex.exceptions import PyPokedexError, PyPokedexHTTPError
 
 SpriteKeys = Dict[str, str]
-
-POKEAPI_SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species"
 
 
 class Ability(NamedTuple):

@@ -34,7 +34,7 @@ jobs:
           poetry install
       - name: Lint with ruff
         run: |
-          ruff --check .
+          ruff check . --format=github
       - name: Test with pytest
         run: |
           pytest
